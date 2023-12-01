@@ -2,11 +2,16 @@
 import 'main.dart';
 
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class ParentRegister extends StatelessWidget {
   // Boş bir dropdown değeri
   String? selectedSchool;
   TextEditingController shuttleCodeController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +36,7 @@ class ParentRegister extends StatelessWidget {
                 ),
                 SizedBox(height: 16.0),
                 TextField(
+                  controller: _nameController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: "Enter name",
@@ -61,14 +67,17 @@ class ParentRegister extends StatelessWidget {
                 ),
                 SizedBox(height: 16.0),
                 ElevatedButton(
-                  onPressed: () {
-                    /////////////////////
-                    //////////////////////////////////////////
-                    /////////////////////
-                    /////////////////////
-                    /////////////////////
-                    /////////////////////
+                  onPressed: () async {
+                    // Get the value from the "Name" input field
+                    String shuttlecode = shuttleCodeController.text;
 
+                    // TODO: Add Firebase logic to push the "Name" value to the database
+                    FirebaseFirestore.instance.collection('Parents').add({
+                      'shuttleCode': shuttlecode,
+                      // Add other fields as needed
+                    });
+
+                    // Additional logic or navigation can be added here
 
                   },
                   child: Text("Register"),

@@ -32,7 +32,7 @@ class LoginParent extends StatelessWidget {
                   controller: tcIdController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: "Enter Tc ID",
+                    labelText: "Enter TC ID",
                   ),
                 ),
                 SizedBox(height: 16.0),
