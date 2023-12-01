@@ -8,10 +8,22 @@ import 'package:flutter/material.dart';
 import 'register_parent.dart';
 
 
-Future<void> main() async {
+void main() async {
   //WidgetsFlutterBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
+
+
+  //Platform.isAndroid ?
+  await Firebase.initializeApp(
+      options: const FirebaseOptions(
+        apiKey: "AIzaSyDfAWVlB6r-MK7nNGBftYSkqN5gir__QSg",
+        appId: "1:304364720194:android:bacd9d16a1f7b5cf571ddb",
+        messagingSenderId: "304364720194",
+        projectId: "kid-cruiser-goat",
+      ),
+    );
+
   await Firebase.initializeApp();
-  runApp(ParentRegister());
+  runApp(HostesRegister());
 
 }

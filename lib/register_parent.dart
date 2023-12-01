@@ -5,12 +5,27 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+class Parent {
+  String name;
+  String surname;
+  String phoneNumber;
+  String shuttleCode;
+
+  Parent({
+    required this.name,
+    required this.surname,
+    required this.phoneNumber,
+    required this.shuttleCode,
+  });
+}
 
 class ParentRegister extends StatelessWidget {
   // Boş bir dropdown değeri
   String? selectedSchool;
   TextEditingController shuttleCodeController = TextEditingController();
-  TextEditingController _nameController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController surnameController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
 
 
   @override
@@ -36,7 +51,7 @@ class ParentRegister extends StatelessWidget {
                 ),
                 SizedBox(height: 16.0),
                 TextField(
-                  controller: _nameController,
+                  controller: nameController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: "Enter name",
@@ -44,6 +59,7 @@ class ParentRegister extends StatelessWidget {
                 ),
                 SizedBox(height: 16.0),
                 TextField(
+                  controller: surnameController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: "Surname",
@@ -51,7 +67,7 @@ class ParentRegister extends StatelessWidget {
                 ),
                 SizedBox(height: 16.0),
                 TextField(
-                  obscureText: true,
+                  controller: phoneNumberController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: "Enter Phone Number",
@@ -59,21 +75,36 @@ class ParentRegister extends StatelessWidget {
                 ),
                 SizedBox(height: 16.0),
                 TextField(
+                  obscureText: true,
                   controller: shuttleCodeController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: "Enter Tc id",
+                    labelText: "Shuttle Code",
                   ),
                 ),
                 SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: () async {
-                    // Get the value from the "Name" input field
-                    String shuttlecode = shuttleCodeController.text;
+                    // Get the values from the text field controllers
+                    String name = nameController.text;
+                    String surname = surnameController.text;
+                    String phoneNumber = phoneNumberController.text;
+                    String shuttleCode = shuttleCodeController.text;
 
-                    // TODO: Add Firebase logic to push the "Name" value to the database
-                    FirebaseFirestore.instance.collection('Parents').add({
-                      'shuttleCode': shuttlecode,
+                    // Create a Parent object
+                    Parent parent = Parent(
+                      name: name,
+                      surname: surname,
+                      phoneNumber: phoneNumber,
+                      shuttleCode: shuttleCode,
+                    );
+
+                    // Add the Parent object to Firestore
+                    await FirebaseFirestore.instance.collection('Parents').add({
+                      'name': parent.name,
+                      'surname': parent.surname,
+                      'phoneNumber': parent.phoneNumber,
+                      'shuttleCode': shuttleCode,
                       // Add other fields as needed
                     });
 
