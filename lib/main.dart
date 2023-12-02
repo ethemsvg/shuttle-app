@@ -1,9 +1,15 @@
-// main.dart
-
-import 'package:ebeveyn/login_parent.dart';
-import 'package:ebeveyn/register_hostes.dart';
 import 'package:flutter/material.dart';
-import 'register_parent.dart';
+import 'home.dart';
 void main() {
-  runApp(LoginParent());
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget  {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+
+      home: homePage(),
+    );
+  }
 }
