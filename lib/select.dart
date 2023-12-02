@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_dev/home.dart';
 import 'register_hostes.dart';
 import 'register_parent.dart';
+import 'hostes_login.dart';
 void main() {
   runApp(select());
 }
@@ -17,6 +18,7 @@ class select extends StatelessWidget {
     double heightbutton = screenSize.height * 0.1;
     double betweenbutton = screenSize.width * 0.1;
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: SafeArea(
           child: Container(
@@ -163,7 +165,7 @@ class select extends StatelessWidget {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => HostesRegister()),
+                                  MaterialPageRoute(builder: (context) => hostes_login()),
                                 );
                               },
                               style: ElevatedButton.styleFrom(

@@ -47,7 +47,7 @@ class _hostes_loginState extends State<hostes_login> {
                 left: MediaQuery.of(context).size.width * 0.011,
                 top: MediaQuery.of(context).size.height * 0.2,
                 child: Image.asset(
-                  'lib/output_image.png',
+                  'assets/output_image.png',
                   width: MediaQuery.of(context).size.width * 0.986,
                   height: MediaQuery.of(context).size.height * 0.498,
                   
