@@ -1,16 +1,19 @@
-// main.dart
-
-
-import 'package:firebase_core/firebase_core.dart';
-import 'package:mobile_dev/DAOServices/Firebase.dart';
-
-import 'login_parent.dart';
-import 'register_hostes.dart';
 import 'package:flutter/material.dart';
-import 'register_parent.dart';
+import 'package:mobile_dev/DAOServices/Firebase.dart';
+import 'home.dart';
 void main() {
+  firebase fb=firebase();
+  fb.initilaize();
 
-  firebase fb;
+  runApp(MyApp());
+}
 
-  runApp(ParentRegister());
+class MyApp extends StatelessWidget  {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+
+      home: homePage(),
+    );
+  }
 }

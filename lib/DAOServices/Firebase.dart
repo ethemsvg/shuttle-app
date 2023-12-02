@@ -4,14 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class firebase{
-  firebase(){
-    WidgetsFlutterBinding.ensureInitialized();
-    //Platform.isAndroid ?
-    this.initilaize();
 
-  }
 
   void initilaize () async {
+    WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp(
       options: const FirebaseOptions(
         apiKey: "AIzaSyDfAWVlB6r-MK7nNGBftYSkqN5gir__QSg",
