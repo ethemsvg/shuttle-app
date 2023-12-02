@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'select.dart';
+import '../select.dart';
 
 
 class homePage extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_dev/home.dart';
-import 'register_hostes.dart';
-import 'register_parent.dart';
+import 'package:mobile_dev/Pages/home.dart';
+import 'Pages/register_hostes.dart';
+import 'Pages/register_parent.dart';
 void main() {
   runApp(select());
 }
