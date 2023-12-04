@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_dev/DAOServices/MyFirebase.dart';
 import 'Pages/Home/HomePage.dart';
+
 void main() {
   MyFirebase fb=MyFirebase();
   fb.initilaize();
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget  {
   Widget build(BuildContext context) {
     return MaterialApp(
 
-      home: homePage(),
+      home:   homePage(),
     );
   }
 }

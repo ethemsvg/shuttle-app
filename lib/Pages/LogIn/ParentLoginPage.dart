@@ -59,7 +59,7 @@ class LogInParent extends StatelessWidget {
                     if(await parentLogInController.logIn(inputController)){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => homePage()),
+                        MaterialPageRoute(builder: (context) => ParentBase()),
                       );
                     }
                     else{
