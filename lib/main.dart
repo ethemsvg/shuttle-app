@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_dev/DAOServices/Firebase.dart';
-import 'Pages/home.dart';
+import 'package:mobile_dev/DAOServices/MyFirebase.dart';
+import 'Pages/Home/HomePage.dart';
 void main() {
-  firebase fb=firebase();
+  MyFirebase fb=MyFirebase();
   fb.initilaize();
 
   runApp(MyApp());

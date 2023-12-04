@@ -1,10 +1,12 @@
 // main.dart
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 
-class firebase{
+class MyFirebase{
 
+  late QuerySnapshot querySnapshot;
 
   void initilaize () async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -18,9 +20,7 @@ class firebase{
     );
     await Firebase.initializeApp();
   }
-
-
-
+  
 
 
 }

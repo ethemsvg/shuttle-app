@@ -1,21 +1,15 @@
-
-import 'package:mobile_dev/Controller/HostessRegisterController.dart';
-import 'package:mobile_dev/Controller/InputController.dart';
-import 'package:mobile_dev/Entities/Concretes/Hostess.dart';
-
-import '../main.dart';
-
+// AddChildPage.dart
+import 'package:mobile_dev/Controller/Concretes/Input/InputController.dart';
+import 'package:mobile_dev/Controller/Concretes/Parent/ParentRegisterController.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 
-class HostesRegister extends StatelessWidget {
 
-  Hostess hostess=Hostess();
-  HostessRegisterController hostessRegisterController=HostessRegisterController();
+class ParentRegister extends StatelessWidget {
+
   InputController inputController=InputController();
+  ParentRegisterController parentRegisterController=ParentRegisterController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +26,7 @@ class HostesRegister extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Hostess Sign-Up",
+                  "Parent-Sign Up",
                   style: TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.bold,
@@ -43,7 +37,7 @@ class HostesRegister extends StatelessWidget {
                   controller: inputController.nameController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: "Enter Name",
+                    labelText: "Enter name",
                   ),
                 ),
                 SizedBox(height: 16.0),
@@ -51,7 +45,7 @@ class HostesRegister extends StatelessWidget {
                   controller: inputController.surnameController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: "Enter Surname",
+                    labelText: "Surname",
                   ),
                 ),
                 SizedBox(height: 16.0),
@@ -68,14 +62,14 @@ class HostesRegister extends StatelessWidget {
                   controller: inputController.shuttleCodeController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: "Enter Shuttle Code",
+                    labelText: "Shuttle Code",
                   ),
                 ),
                 SizedBox(height: 16.0),
                 ElevatedButton(
-                  onPressed: () async{
-                    print("Buradasin!");
-                    hostessRegisterController.register(hostess,inputController);
+                  onPressed: () async {
+                    parentRegisterController.register(inputController);
+                    // Additional logic or navigation can be added here
                   },
                   child: Text("Register"),
                 ),

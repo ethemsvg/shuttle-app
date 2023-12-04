@@ -1,10 +1,10 @@
-// add_child.dart
-import '../main.dart';
-// add_child.dart
+// AddChildPage.dart
+import '../../main.dart';
+// AddChildPage.dart
 
-// add_child.dart
-import '../main.dart';
-// add_child.dart
+// AddChildPage.dart
+import '../../main.dart';
+// AddChildPage.dart
 
 import 'package:flutter/material.dart';
 

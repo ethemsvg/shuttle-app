@@ -1,13 +1,13 @@
 import 'package:mobile_dev/Entities/Abstract/AbstractUser.dart';
 
 class Driver extends AbstractUser{
-  String? _shuttleCode;
+  String? _shuttleKey;
 
-  void set shuttleCode(String? shutlleCode){
-    this._shuttleCode=shutlleCode;
+  void set shuttleKey(String? shuttleKey){
+    this._shuttleKey=shuttleKey;
   }
 
-  String? get shuttleCode{
-    return this._shuttleCode;
+  String? get shuttleKey{
+    return this._shuttleKey;
   }
 }

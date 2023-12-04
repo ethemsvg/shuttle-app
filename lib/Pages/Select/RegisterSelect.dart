@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_dev/Pages/home.dart';
-import 'Pages/register_hostes.dart';
-import 'Pages/register_parent.dart';
+import 'package:mobile_dev/Pages/Home/HomePage.dart';
+import 'package:mobile_dev/Pages/LogIn/ParentLoginPage.dart';
+import 'package:mobile_dev/Pages/Register/HostessRegisterPage.dart';
+import 'package:mobile_dev/Pages/Register/ParentRegisterPage.dart';
 void main() {
-  runApp(select());
+  runApp(RegisterSelect());
 }
 
-class select extends StatelessWidget {
+class RegisterSelect extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -61,17 +62,6 @@ class select extends StatelessWidget {
                             top: topofbutton,
                             left: lefofbutton,
 
-                            //PARENT BUTTONNN
-                            //PARENT BUTTONNN
-                            //PARENT BUTTONNN
-                            //PARENT BUTTONNN
-                            //PARENT BUTTONNN
-                            //PARENT BUTTONNN
-                            //PARENT BUTTONNN
-                            //PARENT BUTTONNN
-                            //PARENT BUTTONNN
-                            //PARENT BUTTONNN
-                            //PARENT BUTTONN
 
                             child: ElevatedButton(
                               onPressed: () {
@@ -214,7 +204,7 @@ class select extends StatelessWidget {
                               alignment: Alignment.center,
 
                               child: Text(
-                                'HOSTES',
+                                'HOSTESS',
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 20,

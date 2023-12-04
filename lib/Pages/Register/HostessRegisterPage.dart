@@ -1,22 +1,12 @@
-// add_child.dart
-import 'package:mobile_dev/Controller/InputController.dart';
-import 'package:mobile_dev/Controller/ParentRegisterController.dart';
-import 'package:mobile_dev/Entities/Concretes/Parent.dart';
-
-import '../main.dart';
-
+import 'package:mobile_dev/Controller/Concretes/Hostess/HostessRegisterController.dart';
+import 'package:mobile_dev/Controller/Concretes/Input/InputController.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 
+class HostesRegister extends StatelessWidget {
 
-class ParentRegister extends StatelessWidget {
-
-  // Boş bir dropdown değeri
-  Parent parent=Parent();
+  HostessRegisterController hostessRegisterController=HostessRegisterController();
   InputController inputController=InputController();
-  ParentRegisterController parentRegisterController=ParentRegisterController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +23,7 @@ class ParentRegister extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Parent-Sign Up",
+                  "Hostess Sign-Up",
                   style: TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.bold,
@@ -44,7 +34,7 @@ class ParentRegister extends StatelessWidget {
                   controller: inputController.nameController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: "Enter name",
+                    labelText: "Enter Name",
                   ),
                 ),
                 SizedBox(height: 16.0),
@@ -52,7 +42,7 @@ class ParentRegister extends StatelessWidget {
                   controller: inputController.surnameController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: "Surname",
+                    labelText: "Enter Surname",
                   ),
                 ),
                 SizedBox(height: 16.0),
@@ -69,14 +59,14 @@ class ParentRegister extends StatelessWidget {
                   controller: inputController.shuttleCodeController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: "Shuttle Code",
+                    labelText: "Enter Shuttle Code",
                   ),
                 ),
                 SizedBox(height: 16.0),
                 ElevatedButton(
-                  onPressed: () async {
-                    parentRegisterController.register(parent,inputController);
-                    // Additional logic or navigation can be added here
+                  onPressed: () async{
+                    print("Buradasin!");
+                    hostessRegisterController.register(inputController);
                   },
                   child: Text("Register"),
                 ),

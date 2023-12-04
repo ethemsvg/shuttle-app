@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:mobile_dev/Entities/Abstract/AbstractUser.dart';
 import 'package:mobile_dev/Entities/Concretes/Children.dart';
 

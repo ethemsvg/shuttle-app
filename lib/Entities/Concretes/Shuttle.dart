@@ -1,5 +1,5 @@
 import 'package:mobile_dev/Entities/Concretes/Driver.dart';
-import 'package:mobile_dev/Pages/register_hostes.dart';
+import 'package:mobile_dev/Pages/Register/HostessRegisterPage.dart';
 
 import 'Hostess.dart';
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class hostes_login extends StatefulWidget {
+class LogInHostess extends StatefulWidget {
   @override
   _hostes_loginState createState() => _hostes_loginState();
 }
 
-class _hostes_loginState extends State<hostes_login> {
+class _hostes_loginState extends State<LogInHostess> {
   TextEditingController idController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 

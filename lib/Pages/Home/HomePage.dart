@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import '../select.dart';
+import 'package:mobile_dev/Pages/Select/LogInSelect.dart';
+import 'package:mobile_dev/Pages/Select/RegisterSelect.dart';
+
 
 
 class homePage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -53,7 +56,7 @@ class homePage extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => select()),
+                            MaterialPageRoute(builder: (context) => LogInSelect()),
                           );
                         },
                         icon: Icon(Icons.login),
@@ -87,7 +90,7 @@ class homePage extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => select()),
+                            MaterialPageRoute(builder: (context) => RegisterSelect()),
                           );
 
                           // Add your Sign In button logic here

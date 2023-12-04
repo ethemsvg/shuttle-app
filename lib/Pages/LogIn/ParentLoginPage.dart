@@ -1,10 +1,14 @@
 // import 'main.dart'; // If main.dart is already imported in main.dart, you don't need to import it again.
 
 import 'package:flutter/material.dart';
+import 'package:mobile_dev/Controller/Concretes/Input/InputController.dart';
+import 'package:mobile_dev/Controller/Concretes/Parent/ParentLogInController.dart';
+import 'package:mobile_dev/Pages/Home/HomePage.dart';
+import 'package:mobile_dev/Pages/Parent/ParentBase.dart';
 
-class LoginParent extends StatelessWidget {
-  TextEditingController tcIdController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+class LogInParent extends StatelessWidget {
+  InputController inputController=InputController();
+  ParentLogInController parentLogInController = ParentLogInController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,39 +33,40 @@ class LoginParent extends StatelessWidget {
                 ),
                 SizedBox(height: 16.0),
                 TextField(
-                  controller: tcIdController,
+                  controller: inputController.phoneNumberController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: "Enter Tc ID",
+                    labelText: "Phone Number",
                   ),
                 ),
                 SizedBox(height: 16.0),
                 TextField(
-                  controller: passwordController,
+                  controller: inputController.passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: "Enter Password",
+                    labelText: "Password",
+                    errorText: parentLogInController.errorMessage,
                   ),
                 ),
                 SizedBox(height: 16.0),
                 ElevatedButton(
-                  onPressed: () {
-                    // Perform sign-in logic using the entered TC ID and Password
-                    //
-                    //
-                    // Perform sign-in logic using the entered TC ID and Password
-                    //
-                    //
-                    // Perform sign-in logic using the entered TC ID and Password
-                    //
-                    //
-                    // Perform sign-in logic using the entered TC ID and Password
-                    //
-                    //
-                    // Perform sign-in logic using the entered TC ID and Password
-                    //
-                    //
+                  onPressed: () async{
+                    setState() {
+                        parentLogInController.errorMessage=null;
+                    };
+
+                    if(await parentLogInController.logIn(inputController)){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => homePage()),
+                      );
+                    }
+                    else{
+                      setState() {
+                        parentLogInController.errorMessage="Invalid number or password!";
+                      };
+                    }
 
                   },
                   child: Text("Sign-In"),

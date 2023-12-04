@@ -5,4 +5,5 @@ class InputController{
   TextEditingController surnameController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController shuttleCodeController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 }
