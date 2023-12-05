@@ -6,7 +6,7 @@ import 'package:mobile_dev/Entities/Concretes/Parent.dart';
 
 class ParentLogInController extends AbstractController{
   MyFirebase myFirebase=MyFirebase();
-  Parent parent = Parent();
+  Parent parent=Parent();
 
   Future<bool> logIn(InputController inputController) async{
     var phoneNumber=inputController.phoneNumberController.text;
@@ -29,8 +29,12 @@ class ParentLogInController extends AbstractController{
           .get();
 
       if(myFirebase.querySnapshot.docs.isNotEmpty){
-          print("phoneNumber: "+phoneNumber);
-          print("shuttleCode: "+shuttleKey);
+          Map<String, dynamic> data = myFirebase.querySnapshot.docs.elementAt(0).data() as Map<String, dynamic>;
+          // Assign values from Firestore document data to the fields
+          parent.phoneNumber = data['phoneNumber'];
+          parent.surname = data['surname'];
+          parent.name = data['name'];
+          parent.shuttleKey = data['shuttleCode']; // eksik var tamamlincak, kaydolurken password alinicak
       }
 
       return myFirebase.querySnapshot.docs.isNotEmpty;

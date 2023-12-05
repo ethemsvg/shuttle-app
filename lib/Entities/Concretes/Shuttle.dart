@@ -8,4 +8,8 @@ class Shuttle{
   String? school_id;
   late Driver driver;
   late Hostess hostess;
+
+  Shuttle(){
+    this.plate_number="";
+  }
 }

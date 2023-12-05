@@ -1,7 +1,7 @@
 abstract class AbstractUser {
   String? _name;
   String? _surname;
-  String? _phone_number;
+  String? _phoneNnumber;
   String? _password;
 
   String? get name{
@@ -21,11 +21,11 @@ abstract class AbstractUser {
   }
 
   String? get phoneNumber{
-    return _phone_number;
+    return _phoneNnumber;
   }
 
   set phoneNumber(String? value){
-    _phone_number = value;
+    _phoneNnumber = value;
   }
 
   String? get password{
