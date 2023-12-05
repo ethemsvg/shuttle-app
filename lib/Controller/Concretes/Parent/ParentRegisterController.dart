@@ -24,6 +24,7 @@ class ParentRegisterController extends AbstractController{
         'surname': parent.surname,
         'phoneNumber': parent.phoneNumber,
         'shuttleCode': parent.shuttleKey,
+        'password': parent.password,
       });
     }
     else{

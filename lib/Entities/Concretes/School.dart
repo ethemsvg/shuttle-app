@@ -3,7 +3,7 @@ import 'Shuttle.dart';
 class School {
   String? _school_name;
   String? _school_id;
-  late List<Shuttle> _shuttle_list = [];
+  List<Shuttle> _shuttle_list = [];
 
   String? get school_name{
     return _school_name;
