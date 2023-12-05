@@ -59,7 +59,7 @@ class _ParentChildListState extends State<CheckChild> {
                       children: [
                         // Text for the button
                         Text(
-                          'LOG OUT',
+                          'Log Out',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.black,
