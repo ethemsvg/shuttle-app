@@ -3,7 +3,7 @@ import 'Children.dart';
 
 class Parent extends AbstractUser {
   String? _shuttleKey;
-  List<Children> _childList = [];
+  List<dynamic> _childList = [];
 
   Parent(){
 
@@ -28,17 +28,17 @@ class Parent extends AbstractUser {
   }
 
   // Getter for childList
-  List<Children> get childList {
+  List<dynamic> get childList {
     return _childList;
   }
 
   // Setter for childList
-  set childList(List<Children> value) {
+  set childList(List<dynamic> value) {
     _childList = value;
   }
 
   @override
   String toString() {
-    return 'Parent { phoneNumber: $phoneNumber, surname: $surname, name: $name, shuttleCode: $shuttleKey }';
+    return 'Parent { phoneNumber: $phoneNumber, password: $password, surname: $surname, name: $name, shuttleCode: $shuttleKey, childList: $childList }';
   }
 }

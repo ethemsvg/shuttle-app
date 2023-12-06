@@ -69,7 +69,6 @@ class ParentRegister extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () async {
                     parentRegisterController.register(inputController);
-                    // Additional logic or navigation can be added here
                   },
                   child: Text("Register"),
                 ),

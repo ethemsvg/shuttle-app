@@ -1,17 +1,50 @@
 // AddChildPage.dart
-import '../../main.dart';
-// AddChildPage.dart
+import 'package:mobile_dev/Controller/Concretes/Input/InputController.dart';
+import 'package:mobile_dev/Controller/Concretes/School/SchoolController.dart';
 
-// AddChildPage.dart
-import '../../main.dart';
-// AddChildPage.dart
 
 import 'package:flutter/material.dart';
 
-class AddChildPage extends StatelessWidget {
+class AddChildPage extends StatefulWidget {
+  @override
+  _AddChildPage createState() => _AddChildPage();
+}
+
+
+
+class _AddChildPage extends State<AddChildPage> {
   // Boş bir dropdown değeri
   String? selectedSchool;
-  TextEditingController shuttleCodeController = TextEditingController();
+  InputController inputController=InputController();
+  SchoolController schoolController=SchoolController();
+
+  List<DropdownMenuItem<String>> dropdownMenuItems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    List<String> schoolList = await schoolController.getListFromDB();
+    List<DropdownMenuItem<String>> items = schoolList.map((String schoolName) {
+      return DropdownMenuItem<String>(
+        value: schoolName,
+        child: Text(schoolName),
+      );
+    }).toList();
+
+    // Add 'Select a School' item
+    items.insert(0, DropdownMenuItem<String>(
+      value: null,
+      child: Text("Select a School"),
+    ));
+
+    setState(() {
+      dropdownMenuItems = items;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,80 +69,65 @@ class AddChildPage extends StatelessWidget {
                 ),
                 SizedBox(height: 16.0),
                 TextField(
+                  controller: inputController.nameController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: "Child Name and Surname",
+                    labelText: "Child Name",
                   ),
                 ),
                 SizedBox(height: 16.0),
                 TextField(
+                  controller: inputController.surnameController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: "Tc id",
+                    labelText: "Child Surname",
                   ),
                 ),
                 SizedBox(height: 16.0),
                 TextField(
-                  obscureText: true,
+                  controller: inputController.idNumberController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: "Parent Phone",
-                  ),
-                ),
-                SizedBox(height: 16.0),
-                // Boş DropdownButton
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(horizontal: 12.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.0),
-                    border: Border.all(),
-                  ),
-                  child: DropdownButton<String>(
-                    value: selectedSchool,
-                    onChanged: (String? newValue) {
-                      if (newValue != null) {
-                        // Seçilen okulu güncelle
-                        selectedSchool = newValue;
-                      }
-                    },
-                    items: [
-                      DropdownMenuItem<String>(
-                        value: null,
-                        child: Text("Select a School"),
-                      ),
-                      ...[], // Boş bir liste ekleyin
-                    ],
-                    style: TextStyle(
-                      fontSize: 16.0, // DropdownButton text font size
-                      color: Colors.black,
-                    ),
-                    underline: SizedBox(), // Remove default underline
+                    labelText: "Tc ID",
                   ),
                 ),
                 SizedBox(height: 16.0),
                 TextField(
-                  controller: shuttleCodeController,
+                  controller: inputController.shuttleCodeController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: "Shuttle Code",
                   ),
                 ),
                 SizedBox(height: 16.0),
+                // Boş DropdownButton
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(horizontal: 12.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5.0),
+                  border: Border.all(),
+                ),
+                child: DropdownButton<String>(
+                  value: selectedSchool,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedSchool = newValue;
+                    });
+                  },
+                  items: dropdownMenuItems,
+                  style: TextStyle(
+                    fontSize: 16.0, // DropdownButton text font size
+                    color: Colors.black,
+                  ),
+                  underline: SizedBox(), // Remove default underline
+                ),
+              ),
+                SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: () {
                     /////////////////////
-                    /////////////////////
-                    /////////////////////
-                    /////////////////////
-                    /////////////////////
-                    /////////////////////
-                    /////////////////////
-                    /////////////////////
-                    /////////////////////
-                    /////////////////////
-                    /////////////////////
-                    /////////////////////
+
 
                   },
                   child: Text("Add Child"),

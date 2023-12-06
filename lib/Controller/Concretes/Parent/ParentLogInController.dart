@@ -21,20 +21,24 @@ class ParentLogInController extends AbstractController{
     return false;
   }
 
-  Future<bool> isValidNumber(String phoneNumber, String shuttleKey) async {
+  Future<bool> isValidNumber(String phoneNumber, String password) async {
     try {
        myFirebase.querySnapshot = await FirebaseFirestore.instance.collection('Parents')
           .where('phoneNumber', isEqualTo: phoneNumber)
-          .where('shuttleCode', isEqualTo: shuttleKey)
+          .where('password', isEqualTo: password)
           .get();
 
       if(myFirebase.querySnapshot.docs.isNotEmpty){
           Map<String, dynamic> data = myFirebase.querySnapshot.docs.elementAt(0).data() as Map<String, dynamic>;
           // Assign values from Firestore document data to the fields
-          parent.phoneNumber = data['phoneNumber'];
+
           parent.surname = data['surname'];
           parent.name = data['name'];
-          parent.shuttleKey = data['shuttleCode']; // eksik var tamamlincak, kaydolurken password alinicak
+          parent.password = data['password'];
+          parent.phoneNumber = data['phoneNumber'];
+          parent.shuttleKey = data['shuttleCode'];
+          parent.childList = data['childList'];
+
       }
 
       return myFirebase.querySnapshot.docs.isNotEmpty;
