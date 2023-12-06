@@ -29,10 +29,10 @@ abstract class AbstractUser {
   }
 
   String? get password{
-    return this.password;
+    return this._password;
   }
 
   void set password(String? password){
-    this.password=password;
+    this._password=password;
   }
 }

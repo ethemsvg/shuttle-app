@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_dev/Pages/Parent/AddChildPage.dart';
 import 'package:mobile_dev/Pages/Parent/CheckChild.dart';
 
 void main() {
@@ -59,7 +60,10 @@ class ParentBase extends StatelessWidget {
                         left: lefofbutton,
                         child: ElevatedButton(
                           onPressed: () {
-                            // Add logic for the button press
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => AddChildPage()),
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             primary: Color(
