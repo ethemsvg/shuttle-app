@@ -111,7 +111,7 @@ class ParentController extends AbstractController{
       children.school.school_name=selectedSchool;
       children.phoneNumber=parent.phoneNumber;
       parent.childList.add(children.key);
-      print("CHILD LIST: "+parent.childList.toString());
+
       addChildToDB(inputController,selectedSchool);
       addChildToParentDB();
 
