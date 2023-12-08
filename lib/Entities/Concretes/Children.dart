@@ -1,22 +1,33 @@
-class Children{
-  String? _parent_phone;
-  String? _school_id;
+import 'dart:math';
+
+import 'package:mobile_dev/Entities/Abstract/AbstractUser.dart';
+import 'package:mobile_dev/Entities/Concretes/School.dart';
+
+class Children extends AbstractUser{
+  School _school=School();
   String? _shuttleKey;
+  String _key="";
 
-  String? get ParentPhone{
-    return this._parent_phone;
+  String generateRandomString(int length) {
+    const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    Random random = Random.secure();
+    return List.generate(length, (_) => characters[random.nextInt(characters.length)]).join();
   }
 
-  String? get SchoolId{
-    return this._school_id;
+  Children(){
+    this._key=generateRandomString(8);
   }
 
-  void set ParentPhone(String? parent_phone){
-    this._parent_phone=parent_phone;
+  String get key{
+    return this._key;
   }
 
-  void set SchoolId(String? school_id){
-    this._school_id=school_id;
+  School get school{
+    return this._school;
+  }
+
+  void set school(School school){
+    this._school=school;
   }
 
   String? get shuttleKey{

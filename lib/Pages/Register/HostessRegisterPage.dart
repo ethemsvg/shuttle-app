@@ -1,11 +1,11 @@
-import 'package:mobile_dev/Controller/Concretes/Hostess/HostessRegisterController.dart';
+import 'package:mobile_dev/Controller/Concretes/Hostess/HostessController.dart';
 import 'package:mobile_dev/Controller/Concretes/Input/InputController.dart';
 import 'package:flutter/material.dart';
 
 
 class HostesRegister extends StatelessWidget {
 
-  HostessRegisterController hostessRegisterController=HostessRegisterController();
+  HostessController hostessRegisterController=HostessController();
   InputController inputController=InputController();
 
   @override

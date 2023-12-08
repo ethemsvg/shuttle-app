@@ -1,5 +1,6 @@
 // AddChildPage.dart
 import 'package:mobile_dev/Controller/Concretes/Input/InputController.dart';
+import 'package:mobile_dev/Controller/Concretes/Parent/ParentController.dart';
 import 'package:mobile_dev/Controller/Concretes/School/SchoolController.dart';
 
 
@@ -10,14 +11,12 @@ class AddChildPage extends StatefulWidget {
   _AddChildPage createState() => _AddChildPage();
 }
 
-
-
 class _AddChildPage extends State<AddChildPage> {
   // Boş bir dropdown değeri
   String? selectedSchool;
+  ParentController parentController=ParentController();
   InputController inputController=InputController();
   SchoolController schoolController=SchoolController();
-
   List<DropdownMenuItem<String>> dropdownMenuItems = [];
 
   @override
@@ -125,10 +124,13 @@ class _AddChildPage extends State<AddChildPage> {
               ),
                 SizedBox(height: 16.0),
                 ElevatedButton(
-                  onPressed: () {
-                    /////////////////////
-
-
+                  onPressed: () async{
+                    if(await parentController.addChild(inputController,selectedSchool)){
+                      print("SUCESSS!");
+                    }
+                    else{
+                      print("yarrami yersin");
+                    }
                   },
                   child: Text("Add Child"),
                 ),
