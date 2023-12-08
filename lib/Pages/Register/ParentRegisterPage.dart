@@ -1,6 +1,6 @@
 // AddChildPage.dart
 import 'package:mobile_dev/Controller/Concretes/Input/InputController.dart';
-import 'package:mobile_dev/Controller/Concretes/Parent/ParentRegisterController.dart';
+import 'package:mobile_dev/Controller/Concretes/Parent/ParentController.dart';
 import 'package:flutter/material.dart';
 
 
@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 class ParentRegister extends StatelessWidget {
 
   InputController inputController=InputController();
-  ParentRegisterController parentRegisterController=ParentRegisterController();
+  ParentController parentController=ParentController();
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +68,7 @@ class ParentRegister extends StatelessWidget {
                 SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: () async {
-                    parentRegisterController.register(inputController);
+                    parentController.register(inputController);
                   },
                   child: Text("Register"),
                 ),

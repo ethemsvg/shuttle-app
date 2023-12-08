@@ -4,7 +4,7 @@ import 'package:mobile_dev/Controller/Concretes/Input/InputController.dart';
 import 'package:mobile_dev/DAOServices/MyFirebase.dart';
 import 'package:mobile_dev/Entities/Concretes/Hostess.dart';
 
-class HostessRegisterController extends AbstractController{
+class HostessController extends AbstractController{
 
   Hostess hostess = Hostess();
   MyFirebase myFirebase=MyFirebase();
