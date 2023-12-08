@@ -129,7 +129,7 @@ class _AddChildPage extends State<AddChildPage> {
                       print("SUCESSS!");
                     }
                     else{
-                      print("yarrami yersin");
+                      print("Error");
                     }
                   },
                   child: Text("Add Child"),

@@ -109,8 +109,9 @@ class ParentController extends AbstractController{
       children.surname=inputController.surnameController.text;
       children.shuttleKey=inputController.shuttleCodeController.text;
       children.school.school_name=selectedSchool;
+      children.phoneNumber=parent.phoneNumber;
       parent.childList.add(children.key);
-      print("CHILD LIST: "+parent.childList.toString());
+
       addChildToDB(inputController,selectedSchool);
       addChildToParentDB();
 
@@ -130,6 +131,7 @@ class ParentController extends AbstractController{
           'TC_id': inputController.idNumberController.text,
           'ShuttleCode': inputController.shuttleCodeController.text,
           'school_name': selectedSchool,
+          'parent_phone_number': parent.phoneNumber,
           'key': children.key,
       });
   }
