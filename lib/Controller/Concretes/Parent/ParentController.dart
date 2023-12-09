@@ -71,7 +71,7 @@ class ParentController extends AbstractController{
       });
     }
     else{
-      print("NUMBER IS USING BY ANOTHER USER");
+      print("NUMBER IS BEING USED BY ANOTHER USER");
       return false;
     }
     return true;
@@ -96,6 +96,8 @@ class ParentController extends AbstractController{
 
   }
 
+
+
   Future<bool> addChild(InputController inputController, String? selectedSchool) async{
     try{
       myFirebase.querySnapshot = await FirebaseFirestore.instance.collection('Shuttle')
@@ -114,7 +116,8 @@ class ParentController extends AbstractController{
 
       addChildToDB(inputController,selectedSchool);
       addChildToParentDB();
-
+      addChildToShuttleDB();
+      addChildToHostessDB();
     }catch(e){
       print("Error: $e");
       return false;
@@ -123,17 +126,44 @@ class ParentController extends AbstractController{
     return true;
   }
 
+
   Future<void> addChildToDB(InputController inputController,String? selectedSchool) async{
       await FirebaseFirestore.instance.collection('Children')
           .add({
           'name': inputController.nameController.text,
           'surname': inputController.surnameController.text,
           'TC_id': inputController.idNumberController.text,
-          'ShuttleCode': inputController.shuttleCodeController.text,
+          'shuttleKey': inputController.shuttleCodeController.text,
           'school_name': selectedSchool,
           'parent_phone_number': parent.phoneNumber,
           'key': children.key,
       });
+  }
+
+  Future<void> addChildToHostessDB() async{
+    myFirebase.querySnapshot= await FirebaseFirestore.instance.collection('Hostess')
+        .where('shuttleKey', isEqualTo: children.shuttleKey)
+        .get();
+
+    var docID=myFirebase.querySnapshot.docs.first.id;
+
+    await FirebaseFirestore.instance.collection('Hostess').doc(docID)
+        .update({
+      'childList': FieldValue.arrayUnion([children.key])
+    });
+  }
+
+  Future<void> addChildToShuttleDB() async{
+    myFirebase.querySnapshot= await FirebaseFirestore.instance.collection('Shuttle')
+        .where('shuttleKey', isEqualTo: children.shuttleKey)
+        .get();
+
+    var docID=myFirebase.querySnapshot.docs.first.id;
+
+    await FirebaseFirestore.instance.collection('Shuttle').doc(docID)
+    .update({
+      'childList': FieldValue.arrayUnion([children.key])
+    });
   }
   
   Future<void> addChildToParentDB() async{
