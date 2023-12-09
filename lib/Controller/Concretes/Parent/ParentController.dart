@@ -71,7 +71,7 @@ class ParentController extends AbstractController{
       });
     }
     else{
-      print("NUMBER IS USING BY ANOTHER USER");
+      print("NUMBER IS BEING USED BY ANOTHER USER");
       return false;
     }
     return true;
