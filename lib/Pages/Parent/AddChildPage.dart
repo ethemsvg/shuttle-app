@@ -83,12 +83,21 @@ class _AddChildPage extends State<AddChildPage> {
                   ),
                 ),
                 SizedBox(height: 16.0),
-                TextField(
-                  controller: inputController.idNumberController,
+                TextFormField(
+                  controller: inputController.birthDateController,
+                  keyboardType: TextInputType.datetime,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: "Tc ID",
+                    labelText: 'Birth Date',
+                    hintText: 'DD.MM.YYYY',
                   ),
+                  validator: (value) {
+                    // Burada doğum tarihi formatının doğruluğunu kontrol ediyoruz.
+                    if (value == null || !RegExp(r'^\d{2}\.\d{2}\.\d{4}$').hasMatch(value)) {
+                      return 'Doğru bir tarih formatı giriniz: GG.AA.YYYY';
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(height: 16.0),
                 TextField(

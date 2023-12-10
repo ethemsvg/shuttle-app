@@ -112,6 +112,8 @@ class ParentController extends AbstractController{
       children.shuttleKey=inputController.shuttleCodeController.text;
       children.school.school_name=selectedSchool;
       children.phoneNumber=parent.phoneNumber;
+      children.birthDate=inputController.birthDateController.text;
+      children.key=children.hashTcID(inputController.birthDateController.text);
       parent.childList.add(children.key);
 
       addChildToDB(inputController,selectedSchool);
@@ -132,10 +134,10 @@ class ParentController extends AbstractController{
           .add({
           'name': inputController.nameController.text,
           'surname': inputController.surnameController.text,
-          'TC_id': inputController.idNumberController.text,
           'shuttleKey': inputController.shuttleCodeController.text,
           'school_name': selectedSchool,
           'parent_phone_number': parent.phoneNumber,
+          'birthDate': inputController.birthDateController.text,
           'key': children.key,
       });
   }
@@ -174,7 +176,8 @@ class ParentController extends AbstractController{
     var docID=myFirebase.querySnapshot.docs.first.id;
 
     await FirebaseFirestore.instance.collection('Parents').doc(docID).update(
-        {'childList': parent.childList});
+        {'childList': FieldValue.arrayUnion([children.key])
+        });
   }
 
 }
