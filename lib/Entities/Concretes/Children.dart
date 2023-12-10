@@ -1,21 +1,35 @@
+import 'dart:convert';
 import 'dart:math';
 
+import 'package:crypto/crypto.dart';
 import 'package:mobile_dev/Entities/Abstract/AbstractUser.dart';
 import 'package:mobile_dev/Entities/Concretes/School.dart';
 
 class Children extends AbstractUser{
   School _school=School();
   String? _shuttleKey;
-  String _key="";
+  late String _key;
+  String? _birthDate;
 
-  String generateRandomString(int length) {
-    const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    Random random = Random.secure();
-    return List.generate(length, (_) => characters[random.nextInt(characters.length)]).join();
+
+  String hashTcID(String tcKimlikNo) {
+    String text=super.name!+super.surname!+tcKimlikNo;
+    var bytes = utf8.encode(text); // TC Kimlik Numarasını Byte'a Dönüştür
+    var digest = sha256.convert(bytes);  // SHA-256 Hash'ini Hesapla
+    return digest.toString();            // Hash'i String Olarak Döndür
   }
 
-  Children(){
-    this._key=generateRandomString(8);
+
+  String? get birthDate{
+    return this._birthDate;
+  }
+
+  void set birthDate(String? value) {
+    _birthDate = value;
+  }
+
+  void set key(String key){
+    this._key=key;
   }
 
   String get key{
