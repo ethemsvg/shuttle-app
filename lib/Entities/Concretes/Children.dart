@@ -10,8 +10,40 @@ class Children extends AbstractUser{
   String? _shuttleKey;
   late String _key;
   String? _birthDate;
+  // Added properties
+  String? _state;
+
+  String? _parentPhoneNumber;
+// Define a constructor with named parameters
+  Children({
+    String? name,
+    String? surname,
+    String? phoneNumber,
+    String? password,
+    String? shuttleKey,
+    String? birthDate,
+    String? state,
+    String? carPlateNumber,
+    String? parentPhoneNumber,
+  }) {
+    this.name = name;
+    this.surname = surname;
+    this.phoneNumber = phoneNumber;
+    this.password = password;
+    this.shuttleKey = shuttleKey;
+    this.birthDate = birthDate;
+    _state = state;
+
+    _parentPhoneNumber = parentPhoneNumber;
+  }
+
+  String? get state => _state;
+  set state(String? state) => _state = state;
 
 
+
+  String? get parentPhoneNumber => _parentPhoneNumber;
+  set parentPhoneNumber(String? parentPhoneNumber) => _parentPhoneNumber = parentPhoneNumber;
   String hashTcID(String tcKimlikNo) {
     String text=super.name!+super.surname!+tcKimlikNo;
     var bytes = utf8.encode(text); // TC Kimlik Numarasını Byte'a Dönüştür
