@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_dev/DAOServices/MyFirebase.dart';
+import 'package:mobile_dev/Pages/LogIn/HostessLoginPage.dart';
+import 'package:mobile_dev/Pages/LogIn/ParentLoginPage.dart';
+import 'package:mobile_dev/Pages/Parent/AddChildPage.dart';
+import 'package:mobile_dev/Pages/Register/HostessRegisterPage.dart';
+import 'package:mobile_dev/Pages/Register/ParentRegisterPage.dart';
 import 'Pages/Home/HomePage.dart';
 
 void main() {
@@ -14,7 +19,7 @@ class MyApp extends StatelessWidget  {
   Widget build(BuildContext context) {
     return MaterialApp(
 
-      home:   homePage(),
+      home:   ParentRegister(),
     );
   }
 }
