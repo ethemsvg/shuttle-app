@@ -3,7 +3,7 @@ import 'package:mobile_dev/Pages/Home/HomePage.dart';
 
 import '../../Controller/Concretes/Input/InputController.dart';
 import '../../Controller/Concretes/Parent/ParentController.dart';
-import '../hostess/hostess_base.dart';
+import '../hostess/HostessBase.dart';
 
 class LogInHostess extends StatefulWidget {
   @override

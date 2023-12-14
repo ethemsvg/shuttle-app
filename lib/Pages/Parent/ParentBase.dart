@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_dev/Pages/Parent/AddChildPage.dart';
 import 'package:mobile_dev/Pages/Parent/CheckChild.dart';
+import 'package:mobile_dev/Pages/Parent/AddChildPage.dart';
 
 void main() {
   runApp(ParentBase());
