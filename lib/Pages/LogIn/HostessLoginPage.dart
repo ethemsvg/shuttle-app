@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_dev/Pages/Home/HomePage.dart';
+
+import '../../Controller/Concretes/Input/InputController.dart';
+import '../../Controller/Concretes/Parent/ParentController.dart';
+import '../hostess/hostess_base.dart';
 
 class LogInHostess extends StatefulWidget {
   @override
@@ -6,18 +11,29 @@ class LogInHostess extends StatefulWidget {
 }
 
 class _hostes_loginState extends State<LogInHostess> {
-  TextEditingController idController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
 
+  InputController inputController = InputController();
+  ParentController hostessLoginController = ParentController();
+  bool _isObscured = true;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  /*
   @override
   void dispose() {
-    idController.dispose();
-    passwordController.dispose();
+    inputController.dispose();
+    parentLoginController.dispose();
     super.dispose();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
+    double topofbutton = screenSize.height * 0.45;
+    double lefofbutton = screenSize.width * 0.1;
+    double rightofbutton = screenSize.width * 0.15;
+    double widthbutton = screenSize.width * 0.25;
+    double heightbutton = screenSize.height * 0.1;
+    double betweenbutton = screenSize.width * 0.1;
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -40,43 +56,66 @@ class _hostes_loginState extends State<LogInHostess> {
           ),
         ),
         child: Center(
-          child: Stack(
-            children: [
-              // Background Image
-              Positioned(
-                left: MediaQuery.of(context).size.width * 0.011,
-                top: MediaQuery.of(context).size.height * 0.2,
-                child: Image.asset(
-                  'lib/output_image.png',
-                  width: MediaQuery.of(context).size.width * 0.986,
-                  height: MediaQuery.of(context).size.height * 0.498,
-                  
+          child: Form(
+            key: _formKey,
+            child: Stack(
+              children: <Widget>[
+                // Background Image
+                Positioned(
+                  left: MediaQuery.of(context).size.width * 0.011,
+                  top: MediaQuery.of(context).size.height * 0.2,
+                  child: Image.asset(
+                    'assets/output_image.png',
+                    width: MediaQuery.of(context).size.width * 0.986,
+                    height: MediaQuery.of(context).size.height * 0.498,
+                  ),
                 ),
-              ),
+            
+                // Sign In Button
+                Positioned(
+                  top: (topofbutton/0.45)*0.66,
+                  left: lefofbutton*3,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      //
+                      //
+                      //
+                      ////
+                      //
+                      // Because of hostes login method not defined yet If block did't completed
+                      //
+                      //
+                      //
+                      //
+                      ////
+                      //
 
-              // Sign In Button
-              Positioned(
-                left: MediaQuery.of(context).size.width * 0.263,
-                top: MediaQuery.of(context).size.height * 0.792,
-                child: InkWell(
-                  onTap: () {
-                    // Handle sign-in button click
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.472,
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    decoration: ShapeDecoration(
-                      color: Color(0xFF66BB82),
+                      if (await hostessLoginController.register(
+                          inputController, _formKey.currentState!)) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => start_cruise_page()),
+                        );
+                      }
+                    },
+
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height * 0.036),
+                        borderRadius: BorderRadius.circular(30),
                       ),
+                      shadowColor: Color(0x3F000000),
+                      elevation: 4,
                     ),
-                    child: Center(
+                    child: Container(
+                      width: widthbutton,
+                      height: heightbutton / 3,
+                      alignment: Alignment.center,
                       child: Text(
-                        'SIGN IN',
+                        'Sign In',
                         style: TextStyle(
-                          color: Color(0xFF0C0B0B),
-                          fontSize: MediaQuery.of(context).size.width * 0.056,
+                          color: Colors.black,
+                          fontSize: 20,
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w400,
                           height: 0,
@@ -85,137 +124,160 @@ class _hostes_loginState extends State<LogInHostess> {
                     ),
                   ),
                 ),
-              ),
-
-              // Input Field for ID Number
-              Positioned(
-                left: MediaQuery.of(context).size.width * 0.12,
-                top: MediaQuery.of(context).size.height * 0.3,
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 1.0,
-                  height: MediaQuery.of(context).size.height * 0.15,
+            
+                // Input Field
+                Positioned(
+                  left: MediaQuery.of(context).size.width * 0.12,
+                  top: MediaQuery.of(context).size.height * 0.3,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Enter ID Number',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: MediaQuery.of(context).size.width * 0.04,
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w400,
-                          height: 0,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
+                      // Phone NUmber Input Field
+            
                       Container(
                         width: MediaQuery.of(context).size.width * 0.6,
-                        height: MediaQuery.of(context).size.height * 0.06,
-                        decoration: ShapeDecoration(
-                          color: Colors.white.withOpacity(0.8),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: TextField(
-                          controller: idController,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                          ),
+                        height: MediaQuery.of(context).size.height * 0.15,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Enter Phone Number',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.04,
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.w400,
+                                height: 0,
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              height: MediaQuery.of(context).size.height * 0.08,
+                              decoration: ShapeDecoration(
+                                color: Colors.white.withOpacity(0.8),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              child: TextFormField(
+                                // obscureText: tr,
+                                controller: inputController.phoneNumberController,
+                                validator:hostessLoginController.validatePhoneNumber,
+                                //controller: inputController.phoneNumberController,
+                                keyboardType: TextInputType.datetime,
+                                decoration: InputDecoration(
+                                  border:
+                                      OutlineInputBorder(), // Add an outline border
+                                  hintText: '0-(5xx)-xxx-xxxx',
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-
-              // Password Input Field
-              Positioned(
-                left: MediaQuery.of(context).size.width * 0.12,
-                top: MediaQuery.of(context).size.height * 0.45,
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.6,
-                  height: MediaQuery.of(context).size.height * 0.15,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Enter Password',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: MediaQuery.of(context).size.width * 0.04,
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w400,
-                          height: 0,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
                       Container(
                         width: MediaQuery.of(context).size.width * 0.6,
-                        height: MediaQuery.of(context).size.height * 0.06,
-                        decoration: ShapeDecoration(
-                          color: Colors.white.withOpacity(0.8),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: TextField(
-                          controller: passwordController,
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                          ),
+                        height: MediaQuery.of(context).size.height * 0.15,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Enter Password',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.04,
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.w400,
+                                height: 0,
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              height: MediaQuery.of(context).size.height * 0.08,
+                              decoration: ShapeDecoration(
+                                color: Colors.white.withOpacity(0.8),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              child: TextFormField(
+                                obscureText: _isObscured,
+                                controller: inputController.passwordController,
+                                validator:
+                                    hostessLoginController.validatePassword,
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    // labelText: "Enter Password",
+                                    //helperText: "Password must be at least 8 characters and include \nan uppercase letter, a lowercase letter, and a digit.",
+                                    suffixIcon: IconButton(
+                                      icon: Icon(
+                                        _isObscured
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          _isObscured = !_isObscured;
+                                        });
+                                      },
+                                    )),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-
-              // return back button
-              Positioned(
-                left: MediaQuery.of(context).size.width * 0.02,
-                top: MediaQuery.of(context).size.height * 0.05,
-                child: IconButton(
-                  icon: Icon(Icons.arrow_back, color: Color(0xFF222222)),
-                  onPressed: () {
-                    // Return back logic
-                  },
-                ),
-              ),
-
-              // SIGN IN HEADER
-              Positioned(
-                top: MediaQuery.of(context).size.height * 0.1,
-                width: MediaQuery.of(context).size.width,
-                child: Center(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: 231,
-                        child: Text(
-                          'SIGN IN',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Color(0xFF775555),
-                            fontSize: 32,
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w400,
-                            height: 0,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 339,
-                        height: 1,
-                        decoration: BoxDecoration(color: Colors.black),
-                      ),
-                    ],
+            
+                // return back button
+                Positioned(
+                  left: MediaQuery.of(context).size.width * 0.02,
+                  top: MediaQuery.of(context).size.height * 0.05,
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_back, color: Color(0xFF222222)),
+                    onPressed: () {Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => homePage()),
+                    );},
                   ),
                 ),
-              ),
-
-            ],
+            
+                // SIGN IN HEADER
+                Positioned(
+                  top: MediaQuery.of(context).size.height * 0.1,
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: 231,
+                          child: Text(
+                            'SIGN IN',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Color(0xFF775555),
+                              fontSize: 32,
+                              fontFamily: 'Roboto',
+                              fontWeight: FontWeight.w400,
+                              height: 0,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: 339,
+                          height: 1,
+                          decoration: BoxDecoration(color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
