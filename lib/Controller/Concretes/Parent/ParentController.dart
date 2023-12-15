@@ -41,7 +41,6 @@ class ParentController extends AbstractController {
         parent.name = data['name'];
         parent.password = data['password'];
         parent.phoneNumber = data['phoneNumber'];
-        parent.shuttleKey = data['shuttleCode'];
         parent.childList = data['childList'];
       }
 
@@ -61,14 +60,12 @@ class ParentController extends AbstractController {
         parent.name = inputController.nameController.text;
         parent.surname = inputController.surnameController.text;
         parent.phoneNumber = inputController.phoneNumberController.text;
-        parent.shuttleKey = inputController.shuttleCodeController.text;
 
         // Add the Parent object to Firestore
         await FirebaseFirestore.instance.collection('Parents').add({
           'name': parent.name,
           'surname': parent.surname,
           'phoneNumber': parent.phoneNumber,
-          'shuttleCode': parent.shuttleKey,
           'password': parent.password,
           'childList': parent.childList,
         });
@@ -186,4 +183,40 @@ class ParentController extends AbstractController {
       'childList': FieldValue.arrayUnion([children.key])
     });
   }
+
+  Future<List<Children>> getChildren() async {
+    List<Children> childrenList = [];
+
+    List<dynamic> childKeys = parent.childList; // parent.childList, parent nesnesinden alınan verilerdir
+
+    for (var element in childKeys) {
+      myFirebase.querySnapshot = await FirebaseFirestore.instance.collection('Children')
+          .where('key', isEqualTo: element)
+          .get();
+
+      for (var documentSnapshot in myFirebase.querySnapshot.docs) {
+        if (documentSnapshot.exists) {
+          var data = documentSnapshot.data() as Map<String, dynamic>;
+
+          var child = Children();
+          child.name = data['name'];
+          child.surname = data['surname'];
+          child.birthDate = data['birthDate'];
+          child.state = data['state'];
+          child.shuttleKey = data['shuttleKey'];
+          child.school.school_name = data['schoolName'];
+          child.phoneNumber = data['parentPhoneNumber'];
+
+          // Çocuk nesnesini childrenList'e ekleyin
+          childrenList.add(child);
+
+          print("CHILDREN NAME: " + child.name!);
+        }
+      }
+    }
+
+    print("CHILD LIST: " + childrenList.toString());
+    return childrenList;
+  }
+
 }

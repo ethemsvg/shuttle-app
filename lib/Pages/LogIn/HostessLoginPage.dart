@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_dev/Controller/Concretes/Hostess/HostessController.dart';
 import 'package:mobile_dev/Pages/Home/HomePage.dart';
 
 import '../../Controller/Concretes/Input/InputController.dart';
@@ -13,7 +14,7 @@ class LogInHostess extends StatefulWidget {
 class _hostes_loginState extends State<LogInHostess> {
 
   InputController inputController = InputController();
-  ParentController hostessLoginController = ParentController();
+  HostessController hostessController = HostessController();
   bool _isObscured = true;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -77,21 +78,7 @@ class _hostes_loginState extends State<LogInHostess> {
                   left: lefofbutton*3,
                   child: ElevatedButton(
                     onPressed: () async {
-                      //
-                      //
-                      //
-                      ////
-                      //
-                      // Because of hostes login method not defined yet If block did't completed
-                      //
-                      //
-                      //
-                      //
-                      ////
-                      //
-
-                      if (await hostessLoginController.register(
-                          inputController, _formKey.currentState!)) {
+                      if (await hostessController.logIn(inputController)) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => start_cruise_page()),
@@ -163,7 +150,7 @@ class _hostes_loginState extends State<LogInHostess> {
                               child: TextFormField(
                                 // obscureText: tr,
                                 controller: inputController.phoneNumberController,
-                                validator:hostessLoginController.validatePhoneNumber,
+                                validator: hostessController.validatePhoneNumber,
                                 //controller: inputController.phoneNumberController,
                                 keyboardType: TextInputType.datetime,
                                 decoration: InputDecoration(
@@ -206,8 +193,7 @@ class _hostes_loginState extends State<LogInHostess> {
                               child: TextFormField(
                                 obscureText: _isObscured,
                                 controller: inputController.passwordController,
-                                validator:
-                                    hostessLoginController.validatePassword,
+                                validator: hostessController.validatePassword,
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     // labelText: "Enter Password",

@@ -7,44 +7,98 @@ import 'package:mobile_dev/Entities/Concretes/Hostess.dart';
 
 class HostessController extends AbstractController{
 
-  Hostess hostess = Hostess();
+  static Hostess hostess = Hostess();
   MyFirebase myFirebase=MyFirebase();
 
-  Future<bool> register(InputController inputController, FormState formState) async{
-    // Get the values from the text field controllers
-    String name = inputController.nameController.text;
-    String surname = inputController.surnameController.text;
-    String phoneNumber = inputController.phoneNumberController.text;
-    String shuttleKey = inputController.shuttleCodeController.text;
-    String password = inputController.passwordController.text;  // Assuming you have a passwordController
+  Future<bool> logIn(InputController inputController) async {
+    var phoneNumber = inputController.phoneNumberController.text;
+    var password = inputController.passwordController.text;
 
-    // Check if all validations pass
-    if (formState.validate()) {
-      // Assign the values to your hostess object
-      hostess.name = name;
-      hostess.surname = surname;
-      hostess.phoneNumber = phoneNumber;
-      hostess.shuttleKey = shuttleKey;
-      hostess.password = password;
-      print("BELLI DEGIL!");
+    if (await checkExistForLogIn(phoneNumber, password)) {
+      return true;
+    } else {
+      super.errorMessage = "Invalid phone number or password!";
+    }
+    return false;
+  }
 
-      // Add the Parent object to Firestore
-      await FirebaseFirestore.instance.collection('Hostess').add({
-        'name': hostess.name,
-        'surname': hostess.surname,
-        'phoneNumber': hostess.phoneNumber,
-        'shuttleCode': hostess.shuttleKey,
-        'password': hostess.password,
-        'students': [],
-      });
-      print("BASARILI!");
+  Future<bool> checkExistForLogIn(String phoneNumber, String password) async {
+    try {
+        print("phoneNumber: "+phoneNumber);
+      myFirebase.querySnapshot = await FirebaseFirestore.instance
+          .collection('Hostess')
+          .where('phoneNumber', isEqualTo: phoneNumber)
+          .where('password', isEqualTo: password)
+          .get();
+
+      if (myFirebase.querySnapshot.docs.isNotEmpty) {
+        Map<String, dynamic> data = myFirebase.querySnapshot.docs
+            .elementAt(0)
+            .data() as Map<String, dynamic>;
+        // Assign values from Firestore document data to the fields
+
+        hostess.surname = data['surname'];
+        hostess.name = data['name'];
+        hostess.password = data['password'];
+        hostess.phoneNumber = data['phoneNumber'];
+        hostess.students = data['students'];
+      }
+
+      return myFirebase.querySnapshot.docs.isNotEmpty;
+    } catch (e) {
+      print("Error: $e");
+      return false;
+    }
+  }
+
+  Future<bool> register(InputController inputController, FormState formState) async {
+    if (formState.validate())
+    {
+      if (await checkExistForRegister(inputController.phoneNumberController.text))
+      {
+        // Get the values from the text field controllers
+        hostess.name = inputController.nameController.text;
+        hostess.surname = inputController.surnameController.text;
+        hostess.phoneNumber = inputController.phoneNumberController.text;
+        hostess.password = inputController.passwordController.text;
+        // Add the Parent object to Firestore
+        await FirebaseFirestore.instance.collection('Hostess').add({
+          'name': hostess.name,
+          'surname': hostess.surname,
+          'phoneNumber': hostess.phoneNumber,
+          'password': hostess.password,
+          'students': [],
+        });
+      }
+      else
+      {
+        print("NUMBER IS BEING USED BY ANOTHER USER");
+        return false;
+      }
       return true;
     }
-      print("BASARISIZ!");
-      return false;
-      // Handle the validation failure (e.g., show an error message)
-
+    return false;
   }
+
+  Future<bool> checkExistForRegister(String phoneNumber) async {
+    try {
+      myFirebase.querySnapshot = await FirebaseFirestore.instance
+          .collection('Hostess')
+          .where('phoneNumber', isEqualTo: phoneNumber)
+          .get();
+
+      if (myFirebase.querySnapshot.docs.isNotEmpty) {
+        return false;
+      }
+
+      return true;
+    } catch (e) {
+      print("Error: $e");
+      return false;
+    }
+  }
+
+
 
 
 

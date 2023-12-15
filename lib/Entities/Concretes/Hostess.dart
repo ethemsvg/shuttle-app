@@ -3,7 +3,7 @@ import 'package:mobile_dev/Entities/Concretes/Children.dart';
 
 class Hostess extends AbstractUser{
   String? _shuttleKey;
-  late List<Children> _childList;
+  List<dynamic> _students=[];
 
   void set shuttleKey(String? shuttleKey){
     this._shuttleKey=shuttleKey;
@@ -13,12 +13,12 @@ class Hostess extends AbstractUser{
     return this._shuttleKey;
   }
 
-  void set childList(List<Children> childList){
-    this._childList=childList;
+  void set students(List<dynamic> students){
+    this._students=students;
   }
 
-  List<Children> get childList{
-    return this._childList;
+  List<dynamic> get students{
+    return this._students;
   }
 
 }

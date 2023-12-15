@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_dev/Controller/Concretes/Parent/ParentController.dart';
+import 'package:mobile_dev/Entities/Concretes/Children.dart';
 
 void main(){
   runApp(CheckChild());
@@ -10,6 +12,8 @@ class CheckChild extends StatefulWidget {
 }
 
 class _ParentChildListState extends State<CheckChild> {
+  ParentController parentController=ParentController();
+  List<Children> list=[];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,11 +120,7 @@ class _ParentChildListState extends State<CheckChild> {
                     children: [
                       // Sample row, replace with dynamic data
                       buildListRow("1", "John Doe", "EV"),
-                      buildListRow("2", "Jane Doe", "OKUL"),
-                      buildListRow("3", "Jack Doe", "YOLDA"),
-                      buildListRow("4", "Joe Doe", "YOLDA"),
-                      buildListRow("5", "Jim Doe", "YOLDA"),
-                      buildListRow("6", "Jean Doe", "EV"),
+
                       // Add more rows as needed
                     ],
                   ),
@@ -135,7 +135,7 @@ class _ParentChildListState extends State<CheckChild> {
 
   Widget buildListRow(String number, String fullName, String status) {
     Color backgroundColor;
-
+    parentController.getChildren();
     // Set background color based on status
     switch (status) {
       case "EV":
