@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_dev/Controller/Concretes/Hostess/HostessController.dart';
 import 'package:mobile_dev/Pages/Home/HomePage.dart';
 import 'package:mobile_dev/Pages/Select/LogInSelect.dart';
 
@@ -13,9 +14,8 @@ class LogInHostess extends StatefulWidget {
 }
 
 class _hostes_loginState extends State<LogInHostess> {
-
   InputController inputController = InputController();
-  ParentController hostessLoginController = ParentController();
+  HostessController hostessController = HostessController();
   bool _isObscured = true;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -75,32 +75,19 @@ class _hostes_loginState extends State<LogInHostess> {
 
                 // Sign In Button
                 Positioned(
-                  top: (topofbutton/0.45)*0.66,
-                  left: lefofbutton*3,
+                  top: (topofbutton / 0.45) * 0.66,
+                  left: lefofbutton * 3,
                   child: ElevatedButton(
                     onPressed: () async {
-                      //
-                      //
-                      //
-                      ////
-                      //
-                      // Because of hostes login method not defined yet If block did't completed
-                      //
-                      //
-                      //
-                      //
-                      ////
-                      //
-
-                      if (await hostessLoginController.logIn(
+                      if (await hostessController.logIn(
                           inputController, _formKey.currentState!)) {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => start_cruise_page()),
+                          MaterialPageRoute(
+                              builder: (context) => start_cruise_page()),
                         );
                       }
                     },
-
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
                       shape: RoundedRectangleBorder(
@@ -146,7 +133,7 @@ class _hostes_loginState extends State<LogInHostess> {
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize:
-                                MediaQuery.of(context).size.width * 0.04,
+                                    MediaQuery.of(context).size.width * 0.04,
                                 fontFamily: 'Roboto',
                                 fontWeight: FontWeight.w400,
                                 height: 0,
@@ -164,13 +151,15 @@ class _hostes_loginState extends State<LogInHostess> {
                               ),
                               child: TextFormField(
                                 // obscureText: tr,
-                                controller: inputController.phoneNumberController,
-                                validator:hostessLoginController.validatePhoneNumber,
+                                controller:
+                                    inputController.phoneNumberController,
+                                validator:
+                                    hostessController.validatePhoneNumber,
                                 //controller: inputController.phoneNumberController,
                                 keyboardType: TextInputType.datetime,
                                 decoration: InputDecoration(
                                   border:
-                                  OutlineInputBorder(), // Add an outline border
+                                      OutlineInputBorder(), // Add an outline border
                                   hintText: '0-(5xx)-xxx-xxxx',
                                 ),
                               ),
@@ -189,7 +178,7 @@ class _hostes_loginState extends State<LogInHostess> {
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize:
-                                MediaQuery.of(context).size.width * 0.04,
+                                    MediaQuery.of(context).size.width * 0.04,
                                 fontFamily: 'Roboto',
                                 fontWeight: FontWeight.w400,
                                 height: 0,
@@ -208,8 +197,7 @@ class _hostes_loginState extends State<LogInHostess> {
                               child: TextFormField(
                                 obscureText: _isObscured,
                                 controller: inputController.passwordController,
-                                validator:
-                                hostessLoginController.validatePassword,
+                                validator: hostessController.validatePassword,
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     // labelText: "Enter Password",
@@ -241,10 +229,12 @@ class _hostes_loginState extends State<LogInHostess> {
                   top: MediaQuery.of(context).size.height * 0.05,
                   child: IconButton(
                     icon: Icon(Icons.arrow_back, color: Color(0xFF222222)),
-                    onPressed: () {Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LogInSelect()),
-                    );},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LogInSelect()),
+                      );
+                    },
                   ),
                 ),
 
