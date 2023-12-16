@@ -153,7 +153,7 @@ class RegisterSelect extends StatelessWidget {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => HostesRegister()),
+                                  MaterialPageRoute(builder: (context) => HostessRegister()),
                                 );
                               },
                               style: ElevatedButton.styleFrom(
