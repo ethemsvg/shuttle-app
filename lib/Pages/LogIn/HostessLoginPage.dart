@@ -154,8 +154,7 @@ class _hostes_loginState extends State<LogInHostess> {
                                 //controller: inputController.phoneNumberController,
                                 keyboardType: TextInputType.datetime,
                                 decoration: InputDecoration(
-                                  border:
-                                      OutlineInputBorder(), // Add an outline border
+                                  enabledBorder: InputBorder.none,
                                   hintText: '0-(5xx)-xxx-xxxx',
                                 ),
                               ),
@@ -195,7 +194,7 @@ class _hostes_loginState extends State<LogInHostess> {
                                 controller: inputController.passwordController,
                                 validator: hostessController.validatePassword,
                                 decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
+                                    enabledBorder: InputBorder.none,
                                     // labelText: "Enter Password",
                                     //helperText: "Password must be at least 8 characters and include \nan uppercase letter, a lowercase letter, and a digit.",
                                     suffixIcon: IconButton(
