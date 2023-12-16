@@ -10,7 +10,6 @@ class Children extends AbstractUser{
   String? _shuttleKey;
   late String _key;
   String? _birthDate;
-  // Added properties
   String? _state;
 
   String? _parentPhoneNumber;
@@ -28,7 +27,7 @@ class Children extends AbstractUser{
   }) {
     this.name = name;
     this.surname = surname;
-    this.phoneNumber = phoneNumber;
+    super.phoneNumber = phoneNumber;
     this.password = password;
     this.shuttleKey = shuttleKey;
     this.birthDate = birthDate;
@@ -38,12 +37,10 @@ class Children extends AbstractUser{
   }
 
   String? get state => _state;
+
   set state(String? state) => _state = state;
 
 
-
-  String? get parentPhoneNumber => _parentPhoneNumber;
-  set parentPhoneNumber(String? parentPhoneNumber) => _parentPhoneNumber = parentPhoneNumber;
   String hashTcID(String tcKimlikNo) {
     String text=super.name!+super.surname!+tcKimlikNo;
     var bytes = utf8.encode(text); // TC Kimlik Numarasını Byte'a Dönüştür

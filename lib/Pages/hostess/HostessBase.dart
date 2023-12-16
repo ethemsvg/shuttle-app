@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_dev/Pages/Home/HomePage.dart';
+import 'package:mobile_dev/Pages/hostess/CheckChild.dart';
 
 class start_cruise_page extends StatefulWidget {
   @override
@@ -48,7 +50,10 @@ class _start_cruise_pageState extends State<start_cruise_page> {
                 top: (MediaQuery.of(context).size.height - MediaQuery.of(context).size.height * 0.07) / 2,
                 child: InkWell(
                   onTap: () {
-                    // Handle START CRUISE button click
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HostessScreen()),
+                    );
                   },
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.5,
@@ -93,7 +98,10 @@ class _start_cruise_pageState extends State<start_cruise_page> {
                 top: MediaQuery.of(context).size.height * 0.792,
                 child: InkWell(
                   onTap: () {
-                    // Handle LOG OUT button click
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => homePage()),
+                    );
                   },
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.472,
@@ -119,19 +127,6 @@ class _start_cruise_pageState extends State<start_cruise_page> {
                   ),
                 ),
               ),
-
-              // return back button
-              Positioned(
-                left: MediaQuery.of(context).size.width * 0.02,
-                top: MediaQuery.of(context).size.height * 0.05,
-                child: IconButton(
-                  icon: Icon(Icons.arrow_back, color: Color(0xFF222222)),
-                  onPressed: () {
-                    // Return back logic
-                  },
-                ),
-              ),
-
               // LOGO HEADER
               Positioned(
                 top: MediaQuery.of(context).size.height * 0.05,

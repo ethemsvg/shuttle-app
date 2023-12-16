@@ -2,215 +2,120 @@ import 'package:flutter/material.dart';
 import 'package:mobile_dev/Controller/Concretes/Parent/ParentController.dart';
 import 'package:mobile_dev/Entities/Concretes/Children.dart';
 
-void main(){
+void main() {
   runApp(CheckChild());
 }
 
 class CheckChild extends StatefulWidget {
   @override
-  _ParentChildListState createState() => _ParentChildListState();
+  _CheckChildState createState() => _CheckChildState();
 }
 
-class _ParentChildListState extends State<CheckChild> {
-  ParentController parentController=ParentController();
-  List<Children> list=[];
+class _CheckChildState extends State<CheckChild> {
+  ParentController parentController = ParentController();
+  List<Children> childrenList = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadChildren();
+  }
+
+  Future<void> _loadChildren() async {
+    childrenList = await parentController.getChildren();
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        clipBehavior: Clip.antiAlias,
-        decoration: ShapeDecoration(
-          gradient: LinearGradient(
-            begin: Alignment(0.00, -1.00),
-            end: Alignment(0, 1),
-            colors: [
-              Color(0xDBFFFBFB),
-              Color(0xF1C6B8C6),
-              Color(0xF3D8D6C2),
-              Color(0xFFDBCFC4),
-            ],
-            stops: [0.0, 0.2, 0.5, 1.0],
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(0),
-          ),
-        ),
-        child: Center(
-          child: Stack(
-            children: [
-
-              // LOG OUT button
-              Positioned(
-                left: (MediaQuery.of(context).size.width - MediaQuery.of(context).size.width * 0.472) / 2,
-                top: MediaQuery.of(context).size.height * 0.792,
-                child: InkWell(
-                  onTap: () {
-                    // Handle LOG OUT button click
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.472,
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    decoration: ShapeDecoration(
-                      color: Color(0xFFFFBBBB),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height * 0.036),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Text for the button
-                        Text(
-                          'Log Out',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: MediaQuery.of(context).size.width * 0.056,
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w400,
-                            height: 0,
-                          ),
-                        ),
-                        SizedBox(width: 10),  // Add some space between the logo and text
-                        // Add your logo here
-                        Image.asset(
-                          'assets/Sign_out_circle_light.png', // Replace with the actual path to your logo
-                          width: 24,  // Adjust the width as needed
-                          height: 24,  // Adjust the height as needed
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-
-              // return back button
-              Positioned(
-                left: MediaQuery.of(context).size.width * 0.02,
-                top: MediaQuery.of(context).size.height * 0.05,
-                child: IconButton(
-                  icon: Icon(Icons.arrow_back, color: Color(0xFF222222)),
-                  onPressed: () {
-                    // Return back logic
-                  },
-                ),
-              ),
-
-              // LOGO HEADER
-              Positioned(
-                top: MediaQuery.of(context).size.height * 0.05,
-                width: MediaQuery.of(context).size.width,
-                child: Center(
-                  child: Image.asset(
-                    'assets/output_image.png',
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    height: MediaQuery.of(context).size.height * 0.2,
-                  ),
-                ),
-              ),
-              // List of rows
-              Positioned(
-                top: MediaQuery.of(context).size.height * 0.25,
-                width: MediaQuery.of(context).size.width,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
-                  child: Column(
-                    children: [
-                      // Sample row, replace with dynamic data
-                      buildListRow("1", "John Doe", "EV"),
-
-                      // Add more rows as needed
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+      appBar: AppBar(
+        title: Text('Children List'),
+        backgroundColor: Color(0xFFDBCFC4), // AppBar rengi
+        actions: [
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: _loadChildren,
+          )
+        ],
       ),
-    );
-  }
-
-  Widget buildListRow(String number, String fullName, String status) {
-    Color backgroundColor;
-    parentController.getChildren();
-    // Set background color based on status
-    switch (status) {
-      case "EV":
-        backgroundColor = Color(0xFFFFB238);
-        break;
-      case "OKUL":
-        backgroundColor = Colors.green;
-        break;
-      case "YOLDA":
-        backgroundColor = Color(0xFF9c59b7);
-        break;
-      default:
-        backgroundColor = Colors.white;
-    }
-
-    return Container(
-      width: MediaQuery.of(context).size.width - 16, // Full width with 8 padding on each side
-      margin: EdgeInsets.symmetric(vertical: 4),
-      padding: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(30),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : Column(
         children: [
-          Container(
-            width: 30,
-            height: 30,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-            ),
-            alignment: Alignment.center,
-            child: Text(
-              number,
-              style: TextStyle(fontSize: 16),
-            ),
+          Image.asset(
+            'assets/output_image.png', // Logo resminin yolu
+            width: MediaQuery.of(context).size.width * 0.5,
           ),
-          SizedBox(width: 8),
           Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    fullName,
-                    style: TextStyle(fontSize: 16),
-                  ),
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment(0.00, -1.00),
+                  end: Alignment(0, 1),
+                  colors: [
+                    Color(0xDBFFFBFB),
+                    Color(0xF1C6B8C6),
+                    Color(0xF3D8D6C2),
+                    Color(0xFFDBCFC4),
+                  ],
+                  stops: [0.0, 0.2, 0.5, 1.0],
                 ),
-                Container(
-                  width: 80, // Fixed width for the status rectangle
-                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      status,
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ),
-                ),
-              ],
+              ),
+              child: ListView.builder(
+                itemCount: childrenList.length,
+                itemBuilder: (context, index) {
+                  return _buildChildItem(childrenList[index]);
+                },
+              ),
             ),
           ),
         ],
       ),
     );
+  }
+
+  Widget _buildChildItem(Children child) {
+    Color backgroundColor = _getStatusColor(child.state!); // Duruma göre renk belirleme
+
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: backgroundColor, // Duruma göre renk atama
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: ListTile(
+        title: Text('${child.name} ${child.surname}'),
+        subtitle: Text('Status: ${child.state}'),
+        trailing: Icon(Icons.arrow_forward),
+        onTap: () {
+          // Burada her çocuk için detay sayfasına yönlendirme yapılabilir.
+        },
+      ),
+    );
+  }
+
+  Color _getStatusColor(String status) {
+    switch (status) {
+      case "EVDE":
+        return Color(0xFFFFB238);
+      case "OKUL":
+        return Colors.green;
+      case "YOLDA":
+        return Color(0xFF9c59b7);
+      default:
+        return Colors.white;
+    }
   }
 }
