@@ -5,7 +5,9 @@ import 'package:mobile_dev/Entities/Concretes/Parent.dart';
 import 'package:mobile_dev/Pages/Home/HomePage.dart';
 import 'package:mobile_dev/Pages/Parent/ParentBase.dart';
 
-import '../hostess/HostessBase.dart';
+import '../Select/LogInSelect.dart';
+
+//import '../hostess/hostess_base.dart';
 
 class LogInParent extends StatefulWidget {
   @override
@@ -15,7 +17,7 @@ class LogInParent extends StatefulWidget {
 class _hostes_loginState extends State<LogInParent> {
 
   InputController inputController = InputController();
-  ParentController parentController = ParentController();
+  ParentController hostessLoginController = ParentController();
   bool _isObscured = true;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -79,7 +81,21 @@ class _hostes_loginState extends State<LogInParent> {
                   left: lefofbutton*3,
                   child: ElevatedButton(
                     onPressed: () async {
-                      if (await parentController.logIn(inputController)) {
+                      //
+                      //
+                      //
+                      ////
+                      //
+                      // Because of hostes login method not defined yet If block did't completed
+                      //
+                      //
+                      //
+                      //
+                      ////
+                      //
+
+                      if (await hostessLoginController.logIn(
+                          inputController, _formKey.currentState!)) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => ParentBase()),
@@ -151,7 +167,7 @@ class _hostes_loginState extends State<LogInParent> {
                               child: TextFormField(
                                 // obscureText: tr,
                                 controller: inputController.phoneNumberController,
-                                validator: parentController.validatePhoneNumber,
+                                validator:hostessLoginController.validatePhoneNumber,
                                 //controller: inputController.phoneNumberController,
                                 keyboardType: TextInputType.datetime,
                                 decoration: InputDecoration(
@@ -195,7 +211,7 @@ class _hostes_loginState extends State<LogInParent> {
                                 obscureText: _isObscured,
                                 controller: inputController.passwordController,
                                 validator:
-                                parentController.validatePassword,
+                                hostessLoginController.validatePassword,
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     // labelText: "Enter Password",
@@ -229,7 +245,7 @@ class _hostes_loginState extends State<LogInParent> {
                     icon: Icon(Icons.arrow_back, color: Color(0xFF222222)),
                     onPressed: () {Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => homePage()),
+                      MaterialPageRoute(builder: (context) => LogInSelect()),
                     );},
                   ),
                 ),
