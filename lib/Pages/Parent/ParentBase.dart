@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_dev/Pages/LogIn/ParentLoginPage.dart';
 import 'package:mobile_dev/Pages/Parent/CheckChild.dart';
 import 'package:mobile_dev/Pages/Parent/AddChildPage.dart';
 
@@ -159,7 +160,12 @@ class ParentBase extends StatelessWidget {
                   bottom: (topofbutton / 0.45) * 0.13,
                   left: lefofbutton * 2,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LogInParent()),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.purple,
                       shape: RoundedRectangleBorder(

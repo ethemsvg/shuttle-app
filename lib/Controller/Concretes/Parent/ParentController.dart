@@ -11,14 +11,17 @@ class ParentController extends AbstractController {
   static Parent parent = Parent();
   Children children = Children();
 
-  Future<bool> logIn(InputController inputController) async {
-    var phoneNumber = inputController.phoneNumberController.text;
-    var password = inputController.passwordController.text;
+  Future<bool> logIn(InputController inputController, FormState formState) async {
+    if(formState.validate()){
+      var phoneNumber = inputController.phoneNumberController.text;
+      var password = inputController.passwordController.text;
 
-    if (await checkExistForLogIn(phoneNumber, password)) {
-      return true;
-    } else {
-      super.errorMessage = "Invalid phone number or password!";
+      if (await checkExistForLogIn(phoneNumber, password)) {
+        return true;
+      } else {
+        super.errorMessage = "Invalid phone number or password!";
+      }
+      return false;
     }
     return false;
   }
