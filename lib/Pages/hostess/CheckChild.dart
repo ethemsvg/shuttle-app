@@ -1,144 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_dev/Controller/Concretes/Hostess/HostessController.dart';
+import 'package:mobile_dev/Controller/Concretes/Parent/ParentController.dart';
 import 'package:mobile_dev/Entities/Concretes/Children.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+void main() {
+  runApp(HostessApp());
+}
+
+class HostessApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Hostess Screen',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: HostessScreen(),
+    );
+  }
+}
 
 class HostessScreen extends StatefulWidget {
   @override
-
   _HostessScreenState createState() => _HostessScreenState();
 }
 
 class _HostessScreenState extends State<HostessScreen> {
-  List<Children> childrenList = [
-    Children(
-      name: "hamza",
-      surname: "konac",
-      state: "Home",
-      carPlateNumber: "ABC 123",
-      parentPhoneNumber: "123-456-7890",
-    ),
-    Children(
-      name: "ETHEM",
-      surname: "MENGAASLAN",
-      state: "On Way",
-      carPlateNumber: "DEF 456",
-      parentPhoneNumber: "987-654-3210",
-    ),
-    Children(
-      name: "Child 3",
-      surname: "Lastname",
-      state: "Home",
-      carPlateNumber: "GHI 789",
-      parentPhoneNumber: "555-123-4567",
-    ),
-    Children(
-      name: "Child 4",
-      surname: "Lastname",
-      state: "Absent",
-      carPlateNumber: "JKL 012",
-      parentPhoneNumber: "111-222-3333",
-    ),
-    Children(
-      name: "ETHEM",
-      surname: "MENGAASLAN",
-      state: "On Way",
-      carPlateNumber: "DEF 456",
-      parentPhoneNumber: "987-654-3210",
-    ),
-    Children(
-      name: "Child 3",
-      surname: "Lastname",
-      state: "Home",
-      carPlateNumber: "GHI 789",
-      parentPhoneNumber: "555-123-4567",
-    ),
-    Children(
-      name: "Child 4",
-      surname: "Lastname",
-      state: "Absent",
-      carPlateNumber: "JKL 012",
-      parentPhoneNumber: "111-222-3333",
-    ),
-    Children(
-      name: "ETHEM",
-      surname: "MENGAASLAN",
-      state: "On Way",
-      carPlateNumber: "DEF 456",
-      parentPhoneNumber: "987-654-3210",
-    ),
-    Children(
-      name: "Child 3",
-      surname: "Lastname",
-      state: "Home",
-      carPlateNumber: "GHI 789",
-      parentPhoneNumber: "555-123-4567",
-    ),
-    Children(
-      name: "Child 4",
-      surname: "Lastname",
-      state: "Absent",
-      carPlateNumber: "JKL 012",
-      parentPhoneNumber: "111-222-3333",
-    ),
-    Children(
-      name: "Child 1",
-      surname: "Lastname",
-      state: "Home",
-      carPlateNumber: "ABC 123",
-      parentPhoneNumber: "123-456-7890",
-    ),
-    Children(
-      name: "Child 2",
-      surname: "Lastname",
-      state: "On Way",
-      carPlateNumber: "DEF 456",
-      parentPhoneNumber: "987-654-3210",
-    ),
-    Children(
-      name: "Child 3",
-      surname: "Lastname",
-      state: "Home",
-      carPlateNumber: "GHI 789",
-      parentPhoneNumber: "555-123-4567",
-    ),
-    Children(
-      name: "Child 4",
-      surname: "Lastname",
-      state: "Absent",
-      carPlateNumber: "JKL 012",
-      parentPhoneNumber: "111-222-3333",
-    ),
-    Children(
-      name: "Child 5",
-      surname: "Lastname",
-      state: "On Way",
-      carPlateNumber: "MNO 345",
-      parentPhoneNumber: "444-555-6666",
-    ),
-  ];
+  HostessController hostessController = HostessController();
+  List<Children> childrenList = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadChildren();
+  }
+
+  Future<void> _loadChildren() async {
+    childrenList = await hostessController.getChildren();
+    childrenList.forEach((element) {print(element.name);});
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
-    double topofbutton = screenSize.height * 0.45;
-    double lefofbutton = screenSize.width * 0.1;
-    double rightofbutton = screenSize.width * 0.15;
-    double widthbutton = screenSize.width * 0.25;
-    double heightbutton = screenSize.height * 0.1;
-    double betweenbutton = screenSize.width * 0.1;
     return Scaffold(
-
       appBar: AppBar(
-
         title: Text("Hostess Screen"),
         centerTitle: true,
       ),
-      body: Stack(
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : Stack(
         children: [
-          Container(width: MediaQuery.of(context).size.width,
+          Container(
+            width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             clipBehavior: Clip.antiAlias,
-            decoration: ShapeDecoration(
+            decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment(0.00, -1.00),
                 end: Alignment(0, 1),
@@ -146,59 +68,22 @@ class _HostessScreenState extends State<HostessScreen> {
                   Color(0xDBFFFBFB),
                   Color(0xF1C6B8C6),
                   Color(0xF3D8D6C2),
-                  Color(0xFFDBCFC4)
+                  Color(0xFFDBCFC4),
                 ],
               ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(0),
-              ),
-            ),),
+            ),
+          ),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      SizedBox(height: 20.0), // Add space between image and list
-                      ...childrenList.map((child) {
-                        return _buildChildContainer(child);
-                      }).toList(),
-                      SizedBox(height: 20.0), // Add space between list and button
-                    ],
-                  ),
+                child: ListView.builder(
+                  itemCount: childrenList.length,
+                  itemBuilder: (context, index) {
+                    return _buildChildContainer(childrenList[index]);
+                  },
                 ),
               ),
-              ElevatedButton(
-                onPressed: () {
-
-                },
-
-                style: ElevatedButton.styleFrom(
-                  backgroundColor:  Color(0xFFF77474),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  shadowColor: Color(0x3F000000),
-                  elevation: 4,
-                ),
-                child: Container(
-                  width: widthbutton*2,
-                  height: heightbutton / 1.5,
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Finish Cruise',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w400,
-                      height: 0,
-                    ),
-                  ),
-                ),
-              ),
-
+              _buildFinishCruiseButton(),
             ],
           ),
         ],
@@ -207,57 +92,111 @@ class _HostessScreenState extends State<HostessScreen> {
   }
 
   Widget _buildChildContainer(Children child) {
-    return Container(
-      margin: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
-      padding: EdgeInsets.all(10.0),
-      decoration: BoxDecoration(
-        color: _getChildColor(child.state),
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            mainAxisSize: MainAxisSize.max,
+    return StatefulBuilder(
+      builder: (BuildContext context, StateSetter setState) {
+        bool isEditing = false; // Tracks if edit mode is active
+
+        return Container(
+          margin: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+          padding: EdgeInsets.all(10.0),
+          decoration: BoxDecoration(
+            color: _getChildColor(child.state!),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Column(
             children: [
-              Text("${child.name} ${child.surname}"),
-              SizedBox(width: 60.0),
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  InkWell(
-                    onTap: () {
-                      // Implement logic for details arrow tap
-                    },
-                    child: Icon(Icons.arrow_drop_down_circle_outlined),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('${child.name} ${child.surname}', style: TextStyle(fontSize: 16)),
+                        SizedBox(height: 4),
+                        Text('Status: ${child.state}', style: TextStyle(fontSize: 14, color: Colors.black54)),
+                      ],
+                    ),
                   ),
-                  SizedBox(width: 30.0),
-                  InkWell(
-                    onTap: () {
-                      // Implement logic for phone arrow tap
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      setState(() {
+                        isEditing = !isEditing; // Toggle edit mode
+                      });
                     },
-                    child: Icon(Icons.phone_in_talk_sharp),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.phone),
+                    color: Colors.black,
+                    onPressed: () async {
+                      final phoneNumber = child.phoneNumber;
+                      print("tel: $phoneNumber");
+                      if (phoneNumber != null && await canLaunch('tel:$phoneNumber')) {
+                        await launch('tel:$phoneNumber');
+                      } else {
+                        // Handle the scenario where the phone number is not available or the URL can't be launched
+                        print('Could not launch the phone number');
+                      }
+                    },
                   ),
                 ],
               ),
+              if (isEditing) // Show dropdown if in edit mode
+                DropdownButton<String>(
+                  value: child.state,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      child.state = newValue!;
+                      // Update the child's status in your data model
+                      // For example, update hostessController.students data
+                    });
+                  },
+                  items: <String>['YOLDA', 'EVDE', 'OKUL']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
             ],
           ),
-        ],
+        );
+      },
+    );
+  }
+
+
+
+  Widget _buildFinishCruiseButton() {
+    return ElevatedButton(
+      onPressed: () {
+        // Implement logic for Finish Cruise button
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Color(0xFFF77474),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+      ),
+      child: Text(
+        'Finish Cruise',
+        style: TextStyle(fontSize: 20),
       ),
     );
   }
 
-  Color _getChildColor(String? state) {
-    // Set colors based on child state
-    switch (state) {
-      case "Home":
+  Color _getChildColor(String status) {
+    switch (status) {
+      case "EVDE":
         return Color(0xFFFFB238);
-      case "On Way":
+      case "YOLDA":
         return Color(0xFF9c59b7);
       case "Absent":
         return Color(0xFFe070b0);
       default:
-        return Color(0xFF9c59b7);
+        return Colors.grey;
     }
   }
 }

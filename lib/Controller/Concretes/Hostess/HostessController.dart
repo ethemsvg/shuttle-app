@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:mobile_dev/Controller/Abstract/AbstractController.dart';
 import 'package:mobile_dev/Controller/Concretes/Input/InputController.dart';
 import 'package:mobile_dev/DAOServices/MyFirebase.dart';
+import 'package:mobile_dev/Entities/Concretes/Children.dart';
 import 'package:mobile_dev/Entities/Concretes/Hostess.dart';
 
 class HostessController extends AbstractController{
@@ -102,7 +103,36 @@ class HostessController extends AbstractController{
     }
   }
 
+  Future<List<Children>> getChildren() async {
+    List<Children> childrenList = [];
 
+    List<dynamic> childKeys = hostess.students;
+
+    for (var element in childKeys) {
+      myFirebase.querySnapshot = await FirebaseFirestore.instance.collection('Children')
+          .where('key', isEqualTo: element)
+          .get();
+
+      for (var documentSnapshot in myFirebase.querySnapshot.docs) {
+        if (documentSnapshot.exists) {
+          var data = documentSnapshot.data() as Map<String, dynamic>;
+
+          var child = Children();
+          child.name = data['name'];
+          child.surname = data['surname'];
+          child.birthDate = data['birthDate'];
+          child.state = data['state'];
+          child.shuttleKey = data['shuttleKey'];
+          child.school.school_name = data['school_name'];
+          child.phoneNumber = data['parent_phone_number'];
+
+          childrenList.add(child);
+        }
+      }
+    }
+
+    return childrenList;
+  }
 
 
 

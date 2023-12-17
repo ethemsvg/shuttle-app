@@ -210,15 +210,11 @@ class ParentController extends AbstractController {
           child.school.school_name = data['schoolName'];
           child.phoneNumber = data['parentPhoneNumber'];
 
-          // Çocuk nesnesini childrenList'e ekleyin
           childrenList.add(child);
-
-          print("CHILDREN NAME: " + child.name!);
         }
       }
     }
 
-    print("CHILD LIST: " + childrenList.toString());
     return childrenList;
   }
 
