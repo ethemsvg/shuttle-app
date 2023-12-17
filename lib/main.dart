@@ -7,12 +7,6 @@ import 'Pages/Home/HomePage.dart';
 void main() {
   MyFirebase fb=MyFirebase();
   fb.initilaize();
-  MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (_) => ChildrenProvider()),
-    ],
-    child: MyApp(),
-  );
   runApp(MyApp());
 }
 

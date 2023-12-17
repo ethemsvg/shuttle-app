@@ -94,7 +94,7 @@ class _HostessScreenState extends State<HostessScreen> {
   Widget _buildChildContainer(Children child) {
     return StatefulBuilder(
       builder: (BuildContext context, StateSetter setState) {
-        bool isEditing = false; // Tracks if edit mode is active
+        bool isEditing = true; // Tracks if edit mode is active
 
         return Container(
           margin: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
@@ -118,48 +118,36 @@ class _HostessScreenState extends State<HostessScreen> {
                       ],
                     ),
                   ),
-                  IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      setState(() {
-                        isEditing = !isEditing; // Toggle edit mode
-                      });
-                    },
-                  ),
+                    DropdownButton<String>(
+                      value: child.state,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          child.state = newValue!;
+
+                          hostessController.updateChildren(child);
+                          // Update the child's status in your data model
+                          // For example, update hostessController.students data
+                        });
+                      },
+                      items: <String>['YOLDA', 'EVDE', 'OKUL']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
                   IconButton(
                     icon: Icon(Icons.phone),
                     color: Colors.black,
                     onPressed: () async {
                       final phoneNumber = child.phoneNumber;
-                      print("tel: $phoneNumber");
-                      if (phoneNumber != null && await canLaunch('tel:$phoneNumber')) {
-                        await launch('tel:$phoneNumber');
-                      } else {
-                        // Handle the scenario where the phone number is not available or the URL can't be launched
-                        print('Could not launch the phone number');
-                      }
+                      await launch('tel:$phoneNumber');
                     },
                   ),
                 ],
               ),
-              if (isEditing) // Show dropdown if in edit mode
-                DropdownButton<String>(
-                  value: child.state,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      child.state = newValue!;
-                      // Update the child's status in your data model
-                      // For example, update hostessController.students data
-                    });
-                  },
-                  items: <String>['YOLDA', 'EVDE', 'OKUL']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
+
             ],
           ),
         );
@@ -193,7 +181,7 @@ class _HostessScreenState extends State<HostessScreen> {
         return Color(0xFFFFB238);
       case "YOLDA":
         return Color(0xFF9c59b7);
-      case "Absent":
+      case "OKUL":
         return Color(0xFFe070b0);
       default:
         return Colors.grey;

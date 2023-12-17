@@ -118,6 +118,7 @@ class HostessController extends AbstractController{
           var data = documentSnapshot.data() as Map<String, dynamic>;
 
           var child = Children();
+          child.key=data['key'];
           child.name = data['name'];
           child.surname = data['surname'];
           child.birthDate = data['birthDate'];
@@ -130,8 +131,27 @@ class HostessController extends AbstractController{
         }
       }
     }
-
     return childrenList;
+  }
+
+  Future<void> updateChildren(Children children) async{
+    myFirebase.querySnapshot= await FirebaseFirestore.instance.collection('Children')
+        .where('key', isEqualTo: children.key).get();
+
+
+    // Check if the document exists
+    if (myFirebase.querySnapshot.docs.isNotEmpty) {
+      // Get the document ID
+      String documentId = myFirebase.querySnapshot.docs.first.id;
+
+      // Update the 'state' field in the document
+      await FirebaseFirestore.instance.collection('Children')
+          .doc(documentId)
+          .update({'state': children.state});
+    } else {
+      print('No document found with the given key');
+    }
+
   }
 
 
