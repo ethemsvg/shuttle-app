@@ -263,6 +263,7 @@ class HostessRegisterState extends State<HostessRegister> {
                               child: ElevatedButton(
                                 onPressed: () async {
                                   if (_formKey.currentState?.validate() ?? false) {
+
                                     // Synchronous validation passed
                                     String? existenceError = await hostessRegisterController.checkUserExistence(
                                         inputController.phoneNumberController.text);
@@ -284,6 +285,22 @@ class HostessRegisterState extends State<HostessRegister> {
                                     } else {
                                       // Existing user, show error dialog
                                       _showErrorDialog(existenceError);
+
+                                    if (await hostessRegisterController.register(
+                                        inputController, _formKey.currentState!)) {
+                                      inputController.nameController.clear();
+                                      inputController.surnameController.clear();
+                                      inputController.phoneNumberController.clear();
+                                      inputController.passwordController.clear();
+                                      inputController.confirmpasswordController.clear();
+
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => LogInHostess(),
+                                        ),
+                                      );
+
                                     }
                                   }
                                 },

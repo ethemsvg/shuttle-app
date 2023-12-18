@@ -79,6 +79,7 @@ class _hostes_loginState extends State<LogInHostess> {
                   top: (topofbutton / 0.45) * 0.66,
                   left: lefofbutton * 3,
                   child: ElevatedButton(
+
                       onPressed: () async {
                         var result = await hostessController.logIn(inputController, _formKey.currentState!);
 
@@ -145,6 +146,20 @@ class _hostes_loginState extends State<LogInHostess> {
                           );
                         }
                       },
+
+                    onPressed: () async {
+                      if (await hostessController.logIn(
+                          inputController, _formKey.currentState!)) {
+                        inputController.phoneNumberController.clear();
+                        inputController.passwordController.clear();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => start_cruise_page()),
+                        );
+                      }
+                    },
+
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
                       shape: RoundedRectangleBorder(

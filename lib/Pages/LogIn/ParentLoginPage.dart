@@ -81,10 +81,17 @@ class _hostes_loginState extends State<LogInParent> {
                   left: lefofbutton * 3,
                   child: ElevatedButton(
                     onPressed: () async {
+
                       var result = await parentController.logIn(inputController, _formKey.currentState!);
 
                       if (result == LoginResult.success) {
                         // Navigate to the next page
+
+                      if (await parentController.logIn(
+                          inputController, _formKey.currentState!)) {
+                        inputController.phoneNumberController.clear();
+                        inputController.passwordController.clear();
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => ParentBase()),

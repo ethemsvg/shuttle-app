@@ -297,6 +297,7 @@ class _ParentRegisterState extends State<ParentRegister> {
                           child: ElevatedButton(
                             onPressed: () async {
                               if (_formKey.currentState?.validate() ?? false) {
+
                                 // Synchronous validation passed
                                 String? existenceError = await parentRegisterController
                                     .checkUserExistence(
@@ -319,6 +320,21 @@ class _ParentRegisterState extends State<ParentRegister> {
                                 } else {
                                   // Existing user, show error dialog
                                   _showErrorDialog(existenceError);
+
+                                if (await parentRegisterController.register(
+                                    inputController, _formKey.currentState!)) {
+                                  inputController.nameController.clear();
+                                  inputController.surnameController.clear();
+                                  inputController.phoneNumberController.clear();
+                                  inputController.passwordController.clear();
+                                  inputController.confirmpasswordController.clear();
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => LogInParent(),
+                                    ),
+                                  );
+
                                 }
                               }
                             },
