@@ -15,7 +15,7 @@ class SchoolController extends AbstractController{
       myFirebase.querySnapshot =
       await FirebaseFirestore.instance.collection('School').get();
       this._schoolList = myFirebase.querySnapshot.docs
-          .map((doc) => doc.get('schoolName') as String)
+          .map((doc) => doc.get('school_name') as String)
           .toList();
       print("SCHOOLS1: " + this._schoolList.toString());
     } catch (e) {
