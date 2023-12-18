@@ -15,6 +15,7 @@ class _AddChildPage extends State<AddChildPage> {
   InputController inputController = InputController();
   SchoolController schoolController = SchoolController();
   List<DropdownMenuItem<String>> dropdownMenuItems = [];
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -74,20 +75,87 @@ class _AddChildPage extends State<AddChildPage> {
           Center(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start, // Bu satır eklenmiştir
-                children: [
-                  Center(
-                    child: Text(
-                      "Add Child",
-
-                      style: TextStyle(
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start, // Bu satır eklenmiştir
+                  children: [
+                    Center(
+                      child: Text(
+                        "Add Child",
+                
+                        style: TextStyle(
+                          fontSize: 24.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
+                    SizedBox(height: 16.0),
+                    buildInputLabel("Child Name"),
+                    buildInputField(
+                      controller: inputController.nameController,
+                      validator: parentController.validateName
+
+                    ),
+                    SizedBox(height: 16.0),
+                    buildInputLabel("Child Surname"),
+                    buildInputField(
+                      controller: inputController.surnameController,
+                        validator: parentController.validateSurname
+                    ),
+                    SizedBox(height: 16.0),
+                    buildInputLabel("Birth Date"),
+                      Container(
+                      width: MediaQuery.of(context).size.width * 0.6, // Yatay uzunluğu buradan kontrol edebilirsiniz
+                      padding: EdgeInsets.symmetric(horizontal: 12.0),
+                      decoration: ShapeDecoration(
+                      color: Colors.white.withOpacity(0.8),
+                      shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      ),
+                      ),
+                      child:
+                      TextField(
+                      controller: inputController.birthDateController,
+                      decoration: InputDecoration(
+                      border: InputBorder.none,
+                      ),
+                      textAlign: TextAlign.start,
+                      ),
+                      ),
+                    SizedBox(height: 16.0),
+                    buildInputLabel("Parent Phone"),
+                    buildInputField(
+                      controller: inputController.phoneNumberController,
+                        validator: parentController.validatePhoneNumber
+                    ),
+
+                    SizedBox(height: 16.0),
+                    buildInputLabel("Shuttle Code"),
+                    buildInputField(
+                      controller: inputController.shuttleCodeController,
+                        validator: parentController.validateShuttleKey
+                    ),
+                    SizedBox(height: 16.0),
+                    buildInputLabel("Select a School"),
+                    buildInputField_(
+                      controller: null,
+                      child: DropdownButton<String>(
+                        value: selectedSchool,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedSchool = newValue;
+                          });
+                        },
+                        items: dropdownMenuItems,
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.black,
+                        ),
+                        underline: SizedBox(),
+
                   ),
                   SizedBox(height: 16.0),
                   buildInputLabel("Child Name"),
@@ -124,9 +192,25 @@ class _AddChildPage extends State<AddChildPage> {
                       style: TextStyle(
                         fontSize: 16.0,
                         color: Colors.black,
+
                       ),
-                      underline: SizedBox(),
                     ),
+
+                    SizedBox(height: 16.0),
+                    buildElevatedButton(
+                      onPressed: () async {
+                        if (await parentController.addChild(
+                            inputController, selectedSchool,_formKey.currentState!)) {
+                          print("SUCCESS!");
+                        } else {
+                          print("Error");
+                        }
+                      },
+                      label: "Add Child",
+                    ),
+                  ],
+                ),
+
                   ),
                   SizedBox(height: 16.0),
                   buildElevatedButton(
@@ -145,6 +229,7 @@ class _AddChildPage extends State<AddChildPage> {
                     label: "Add Child",
                   ),
                 ],
+
               ),
             ),
           ),
@@ -166,6 +251,39 @@ class _AddChildPage extends State<AddChildPage> {
   }
 
   Widget buildInputField({
+
+    required TextEditingController controller,
+    String? Function(String?)? validator, // Adding validator parameter
+    TextInputType keyboardType = TextInputType.text,
+    bool obscureText = false,
+    String hintText = "",
+    Widget? suffixIcon,
+  }) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.6,
+      padding: EdgeInsets.symmetric(horizontal: 12.0),
+      decoration: ShapeDecoration(
+        color: Colors.white.withOpacity(0.8),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          hintText: hintText, // Optional: placeholder text
+          border: InputBorder.none,
+          suffixIcon: suffixIcon, // Optional: add a suffix icon if needed
+        ),
+        textAlign: TextAlign.start,
+        obscureText: obscureText, // Optional: for password fields
+        keyboardType: keyboardType, // Optional: to specify input type
+        validator: validator, // Attach the validator function
+      ),
+    );
+  }
+
+  Widget buildInputField_({
     required TextEditingController? controller,
     Widget? child,
   }) {
@@ -188,6 +306,7 @@ class _AddChildPage extends State<AddChildPage> {
           ),
     );
   }
+
 
   Widget buildElevatedButton({
     required VoidCallback onPressed,

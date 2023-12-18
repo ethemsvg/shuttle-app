@@ -81,6 +81,8 @@ class _hostes_loginState extends State<LogInHostess> {
                     onPressed: () async {
                       if (await hostessController.logIn(
                           inputController, _formKey.currentState!)) {
+                        inputController.phoneNumberController.clear();
+                        inputController.passwordController.clear();
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -158,8 +160,7 @@ class _hostes_loginState extends State<LogInHostess> {
                                 //controller: inputController.phoneNumberController,
                                 keyboardType: TextInputType.datetime,
                                 decoration: InputDecoration(
-                                  border:
-                                      OutlineInputBorder(), // Add an outline border
+                                  enabledBorder: InputBorder.none, // Add an outline border
                                   hintText: '0-(5xx)-xxx-xxxx',
                                 ),
                               ),
@@ -198,8 +199,14 @@ class _hostes_loginState extends State<LogInHostess> {
                                 obscureText: _isObscured,
                                 controller: inputController.passwordController,
                                 validator: hostessController.validatePassword,
+
                                 decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
+                                    enabledBorder: InputBorder.none,
+                                    errorStyle: TextStyle( // Adjust the style of error text
+                                      fontSize: 10, // Smaller font size
+                                      height: 0.7, // Tighter line height
+                                    ),
+                                    errorMaxLines: 3,
                                     // labelText: "Enter Password",
                                     //helperText: "Password must be at least 8 characters and include \nan uppercase letter, a lowercase letter, and a digit.",
                                     suffixIcon: IconButton(

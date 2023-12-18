@@ -161,7 +161,11 @@ class _ParentRegisterState extends State<ParentRegister> {
                                   validator: parentRegisterController.validatePassword,
                                   decoration: InputDecoration(
                                       enabledBorder: InputBorder.none,
-                                      contentPadding: EdgeInsets.only(left: 20.0, top: 20.0),
+                                      errorStyle: TextStyle( // Adjust the style of error text
+                                        fontSize: 10, // Smaller font size
+                                        height: 0.7, // Tighter line height
+                                      ),
+                                      errorMaxLines: 3,
                                       // labelText: "Enter Password",
                                       //helperText: "Password must be at least 8 characters and include \nan uppercase letter, a lowercase letter, and a digit.",
                                       suffixIcon: IconButton(
@@ -222,7 +226,11 @@ class _ParentRegisterState extends State<ParentRegister> {
                                   //keyboardType: TextInputType.,
                                   decoration: InputDecoration(
                                       enabledBorder: InputBorder.none,
-                                      contentPadding: EdgeInsets.only(left: 20.0, top: 20.0),
+                                      errorStyle: TextStyle( // Adjust the style of error text
+                                        fontSize: 10, // Smaller font size
+                                        height: 0.7, // Tighter line height
+                                      ),
+                                      errorMaxLines: 3,
                                       //labelText: "Confirm Password",
                                       helperText: "Re-enter your password",
                                       suffixIcon:IconButton(
@@ -248,6 +256,11 @@ class _ParentRegisterState extends State<ParentRegister> {
                               if (_formKey.currentState?.validate() ?? false) {
                                 if (await parentRegisterController.register(
                                     inputController, _formKey.currentState!)) {
+                                  inputController.nameController.clear();
+                                  inputController.surnameController.clear();
+                                  inputController.phoneNumberController.clear();
+                                  inputController.passwordController.clear();
+                                  inputController.confirmpasswordController.clear();
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(

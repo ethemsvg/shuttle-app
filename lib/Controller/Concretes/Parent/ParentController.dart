@@ -11,8 +11,9 @@ class ParentController extends AbstractController {
   static Parent parent = Parent();
   Children children = Children();
 
-  Future<bool> logIn(InputController inputController, FormState formState) async {
-    if(formState.validate()){
+  Future<bool> logIn(
+      InputController inputController, FormState formState) async {
+    if (formState.validate()) {
       var phoneNumber = inputController.phoneNumberController.text;
       var password = inputController.passwordController.text;
 
@@ -54,11 +55,11 @@ class ParentController extends AbstractController {
     }
   }
 
-  Future<bool> register(InputController inputController, FormState formState) async {
-    if (formState.validate())
-    {
-      if (await checkExistForRegister( inputController.phoneNumberController.text))
-      {
+  Future<bool> register(
+      InputController inputController, FormState formState) async {
+    if (formState.validate()) {
+      if (await checkExistForRegister(
+          inputController.phoneNumberController.text)) {
         // Get the values from the text field controllers
         parent.name = inputController.nameController.text;
         parent.surname = inputController.surnameController.text;
@@ -74,9 +75,7 @@ class ParentController extends AbstractController {
           'password': parent.password,
           'childList': parent.childList,
         });
-      }
-      else
-      {
+      } else {
         print("NUMBER IS BEING USED BY ANOTHER USER");
         return false;
       }
@@ -102,6 +101,41 @@ class ParentController extends AbstractController {
       return false;
     }
   }
+
+
+  Future<bool> addChild(InputController inputController, String? selectedSchool,
+      FormState formState) async {
+    if (formState.validate()) {
+      try {
+        myFirebase.querySnapshot = await FirebaseFirestore.instance
+            .collection('Shuttle')
+            .where('shuttleKey',
+                isEqualTo: inputController.shuttleCodeController.text)
+            .get();
+        if (myFirebase.querySnapshot.docs.isEmpty) {
+          return false;
+        }
+
+        children.name = inputController.nameController.text;
+        children.surname = inputController.surnameController.text;
+        children.shuttleKey = inputController.shuttleCodeController.text;
+        children.school.school_name = selectedSchool;
+        children.phoneNumber = parent.phoneNumber;
+        children.birthDate = inputController.birthDateController.text;
+        children.key =
+            children.hashTcID(inputController.birthDateController.text);
+        parent.childList.add(children.key);
+
+        addChildToDB(inputController, selectedSchool);
+        addChildToParentDB();
+        addChildToShuttleDB();
+        addChildToHostessDB();
+      } catch (e) {
+        print("Error: $e");
+        return false;
+      }
+
+      return true;
 
   Future<bool> addChild(
       InputController inputController, String? selectedSchool) async {
@@ -132,9 +166,9 @@ class ParentController extends AbstractController {
     } catch (e) {
       print("Error: $e");
       return false;
-    }
 
-    return true;
+    }
+    return false;
   }
 
   Future<void> addChildToDB(
@@ -193,10 +227,12 @@ class ParentController extends AbstractController {
   Future<List<Children>> getChildren() async {
     List<Children> childrenList = [];
 
-    List<dynamic> childKeys = parent.childList; // parent.childList, parent nesnesinden alınan verilerdir
+    List<dynamic> childKeys = parent
+        .childList; // parent.childList, parent nesnesinden alınan verilerdir
 
     for (var element in childKeys) {
-      myFirebase.querySnapshot = await FirebaseFirestore.instance.collection('Children')
+      myFirebase.querySnapshot = await FirebaseFirestore.instance
+          .collection('Children')
           .where('key', isEqualTo: element)
           .get();
 
@@ -220,5 +256,4 @@ class ParentController extends AbstractController {
 
     return childrenList;
   }
-
 }
