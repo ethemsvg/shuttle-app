@@ -4,11 +4,13 @@ import 'package:mobile_dev/Controller/Concretes/Input/InputController.dart';
 import 'package:mobile_dev/Pages/LogIn/HostessLoginPage.dart';
 
 class HostessRegister extends StatefulWidget {
+  const HostessRegister({super.key});
+
   @override
-  _HostessRegisterState createState() => _HostessRegisterState();
+  HostessRegisterState createState() => HostessRegisterState();
 }
 
-class _HostessRegisterState extends State<HostessRegister> {
+class HostessRegisterState extends State<HostessRegister> {
   bool _isObscured = true;
   bool _isObscured_ = true;
   HostessController hostessRegisterController = HostessController();
@@ -261,6 +263,29 @@ class _HostessRegisterState extends State<HostessRegister> {
                               child: ElevatedButton(
                                 onPressed: () async {
                                   if (_formKey.currentState?.validate() ?? false) {
+
+                                    // Synchronous validation passed
+                                    String? existenceError = await hostessRegisterController.checkUserExistence(
+                                        inputController.phoneNumberController.text);
+                                   // print(existenceError);
+                                    if (existenceError == null) {
+                                     // print("object");
+                                      // No existing user, try to register
+                                      bool registrationSuccess = await hostessRegisterController
+                                          .register(
+                                          inputController, _formKey.currentState!);
+
+                                      if (!registrationSuccess) {
+                                        // Registration failed, show dialog
+                                        _showErrorDialog(
+                                            "Registration failed. Please try again.");
+                                      } else {
+                                        // Registration success, proceed further
+                                      }
+                                    } else {
+                                      // Existing user, show error dialog
+                                      _showErrorDialog(existenceError);
+
                                     if (await hostessRegisterController.register(
                                         inputController, _formKey.currentState!)) {
                                       inputController.nameController.clear();
@@ -275,28 +300,8 @@ class _HostessRegisterState extends State<HostessRegister> {
                                           builder: (context) => LogInHostess(),
                                         ),
                                       );
+
                                     }
-                                  } else {
-                                    setState(() {
-                                      _nameError = hostessRegisterController
-                                          .validateName(
-                                          inputController.nameController.text);
-                                      _surnameError = hostessRegisterController
-                                          .validateSurname(
-                                          inputController.surnameController.text);
-                                      _phoneNumberError =
-                                          hostessRegisterController.validatePhoneNumber(
-                                              inputController.phoneNumberController.text);
-                                      _shuttleCodeError = hostessRegisterController
-                                          .validateShuttleKey(
-                                          inputController.shuttleCodeController.text);
-                                      _passwordError = hostessRegisterController
-                                          .validatePassword(
-                                          inputController.passwordController.text);
-                                      _confirmPasswordError = hostessRegisterController
-                                          .validatePassword(
-                                          inputController.confirmpasswordController.text);
-                                    });
                                   }
                                 },
                                 child: Text("Register"),
@@ -364,6 +369,25 @@ class _HostessRegisterState extends State<HostessRegister> {
           ),
         ],
       ),
+    );
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) =>
+          AlertDialog(
+            title: Text('Error'),
+            content: Text(message),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+              ),
+            ],
+          ),
     );
   }
 }

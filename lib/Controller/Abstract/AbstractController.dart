@@ -1,3 +1,10 @@
+enum LoginResult {
+  success,
+  invalidPhoneNumberOrPassword,
+  phoneNumberNotExist,
+  error,
+}
+
 abstract class AbstractController{
   String? errorMessage="";
 

@@ -6,10 +6,22 @@ import 'package:mobile_dev/Entities/Concretes/Children.dart';
 import 'package:mobile_dev/Entities/Concretes/Parent.dart';
 import 'package:flutter/cupertino.dart';
 
+
+
+
 class ParentController extends AbstractController {
   MyFirebase myFirebase = MyFirebase();
   static Parent parent = Parent();
   Children children = Children();
+
+
+  Future<LoginResult> logIn(InputController inputController, FormState formState) async {
+    if (!formState.validate()) {
+      return LoginResult.error;
+    }
+
+    var phoneNumber = inputController.phoneNumberController.text;
+    var password = inputController.passwordController.text;
 
   Future<bool> logIn(
       InputController inputController, FormState formState) async {
@@ -17,15 +29,20 @@ class ParentController extends AbstractController {
       var phoneNumber = inputController.phoneNumberController.text;
       var password = inputController.passwordController.text;
 
-      if (await checkExistForLogIn(phoneNumber, password)) {
-        return true;
+
+    try {
+      bool exists = await checkExistForLogIn(phoneNumber, password);
+      if (exists) {
+        return LoginResult.success;
       } else {
-        super.errorMessage = "Invalid phone number or password!";
+        return LoginResult.phoneNumberNotExist;
       }
-      return false;
+    } catch (e) {
+      //print("Error: $e");
+      return LoginResult.error;
     }
-    return false;
   }
+
 
   Future<bool> checkExistForLogIn(String phoneNumber, String password) async {
     try {
@@ -55,6 +72,22 @@ class ParentController extends AbstractController {
     }
   }
 
+
+  Future<String?> checkUserExistence(String phoneNumber) async {
+    try {
+      var exists = await checkExistForRegister(phoneNumber);
+     // print(exists);
+      if (!exists) {
+        // User already exists
+        return "This phone number is already in use.";
+      }
+      return null; // User does not exist, return null
+    } catch (e) {
+      return "An error occurred during registration.";
+    }
+  }
+
+
   Future<bool> register(
       InputController inputController, FormState formState) async {
     if (formState.validate()) {
@@ -76,6 +109,9 @@ class ParentController extends AbstractController {
           'childList': parent.childList,
         });
       } else {
+
+        //print("NUMBER IS BEING USED BY ANOTHER USER");
+
         print("NUMBER IS BEING USED BY ANOTHER USER");
         return false;
       }
