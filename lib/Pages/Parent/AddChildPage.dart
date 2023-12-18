@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_dev/Controller/Concretes/Input/InputController.dart';
 import 'package:mobile_dev/Controller/Concretes/Parent/ParentController.dart';
 import 'package:mobile_dev/Controller/Concretes/School/SchoolController.dart';
+import 'package:mobile_dev/Pages/Parent/ParentBase.dart';
 
 class AddChildPage extends StatefulWidget {
   @override
@@ -130,6 +131,7 @@ class _AddChildPage extends State<AddChildPage> {
                       controller: inputController.phoneNumberController,
                         validator: parentController.validatePhoneNumber
                     ),
+
                     SizedBox(height: 16.0),
                     buildInputLabel("Shuttle Code"),
                     buildInputField(
@@ -153,8 +155,47 @@ class _AddChildPage extends State<AddChildPage> {
                           color: Colors.black,
                         ),
                         underline: SizedBox(),
+
+                  ),
+                  SizedBox(height: 16.0),
+                  buildInputLabel("Child Name"),
+                  buildInputField(
+                    controller: inputController.nameController,
+                  ),
+                  SizedBox(height: 16.0),
+                  buildInputLabel("Child Surname"),
+                  buildInputField(
+                    controller: inputController.surnameController,
+                  ),
+                  SizedBox(height: 16.0),
+                  buildInputLabel("Birth Date"),
+                  buildInputField(
+                    controller: inputController.birthDateController,
+                  ),
+                  SizedBox(height: 16.0),
+                  buildInputLabel("Shuttle Code"),
+                  buildInputField(
+                    controller: inputController.shuttleCodeController,
+                  ),
+                  SizedBox(height: 16.0),
+                  buildInputLabel("Select a School"),
+                  buildInputField(
+                    controller: null,
+                    child: DropdownButton<String>(
+                      value: selectedSchool,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedSchool = newValue;
+                        });
+                      },
+                      items: dropdownMenuItems,
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.black,
+
                       ),
                     ),
+
                     SizedBox(height: 16.0),
                     buildElevatedButton(
                       onPressed: () async {
@@ -169,6 +210,26 @@ class _AddChildPage extends State<AddChildPage> {
                     ),
                   ],
                 ),
+
+                  ),
+                  SizedBox(height: 16.0),
+                  buildElevatedButton(
+                    onPressed: () async {
+                      if (await parentController.addChild(
+                          inputController, selectedSchool)) {
+                        print("SUCCESS!");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ParentBase()),
+                        );
+                      } else {
+                        print("Error");
+                      }
+                    },
+                    label: "Add Child",
+                  ),
+                ],
+
               ),
             ),
           ),

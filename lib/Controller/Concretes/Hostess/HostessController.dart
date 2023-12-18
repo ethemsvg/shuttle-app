@@ -39,7 +39,7 @@ class HostessController extends AbstractController{
   Future<bool> checkExistForLogIn(String phoneNumber, String password) async {
     try {
         print("phoneNumber: "+phoneNumber);
-      myFirebase.querySnapshot = await FirebaseFirestore.instance
+          myFirebase.querySnapshot = await FirebaseFirestore.instance
           .collection('Hostess')
           .where('phoneNumber', isEqualTo: phoneNumber)
           .where('password', isEqualTo: password)
@@ -55,7 +55,7 @@ class HostessController extends AbstractController{
         hostess.name = data['name'];
         hostess.password = data['password'];
         hostess.phoneNumber = data['phoneNumber'];
-        hostess.students = data['students'];
+        hostess.students = data['child_list'];
       }
 
       return myFirebase.querySnapshot.docs.isNotEmpty;
@@ -91,13 +91,23 @@ class HostessController extends AbstractController{
         hostess.surname = inputController.surnameController.text;
         hostess.phoneNumber = inputController.phoneNumberController.text;
         hostess.password = inputController.passwordController.text;
+        hostess.shuttleKey = inputController.shuttleCodeController.text;
+
+        myFirebase.querySnapshot = await FirebaseFirestore.instance.collection('Shuttle')
+        .where('shuttle_code', isEqualTo: hostess.shuttleKey).get();
+
+        var doc= myFirebase.querySnapshot.docs.first as dynamic;
+
+        List<dynamic> childList = doc.data()['child_list'] as List<dynamic>;
+
         // Add the Parent object to Firestore
         await FirebaseFirestore.instance.collection('Hostess').add({
           'name': hostess.name,
           'surname': hostess.surname,
           'phoneNumber': hostess.phoneNumber,
           'password': hostess.password,
-          'students': [],
+          'shuttle_code': hostess.shuttleKey,
+          'child_list': childList,
         });
       }
       else
