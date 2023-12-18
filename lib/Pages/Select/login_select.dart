@@ -1,22 +1,25 @@
+
 import 'package:flutter/material.dart';
+
 import 'package:mobile_dev/Pages/Home/HomePage.dart';
+import 'package:mobile_dev/Pages/LogIn/HostessLoginPage.dart';
 import 'package:mobile_dev/Pages/LogIn/ParentLoginPage.dart';
-import 'package:mobile_dev/Pages/Register/HostessRegisterPage.dart';
-import 'package:mobile_dev/Pages/Register/ParentRegisterPage.dart';
+
 void main() {
-  runApp(RegisterSelect());
+  runApp(const LogInSelect());
 }
 
-class RegisterSelect extends StatelessWidget {
+class LogInSelect extends StatelessWidget {
+  const LogInSelect({super.key});
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
-    double topofbutton = screenSize.height * 0.45;
-    double lefofbutton = screenSize.width * 0.1;
-    double rightofbutton = screenSize.width * 0.15;
-    double widthbutton = screenSize.width * 0.25;
-    double heightbutton = screenSize.height * 0.1;
-    double betweenbutton = screenSize.width * 0.1;
+    double buttongroup = screenSize.height * 0.45;
+    double buttonhole = screenSize.width * 0.1;
+    double widthButton = screenSize.width * 0.25;
+    double heightButton = screenSize.height * 0.1;
+    double betweenButton = screenSize.width * 0.1;
     return MaterialApp(
       home: Scaffold(
         body: SafeArea(
@@ -25,7 +28,7 @@ class RegisterSelect extends StatelessWidget {
             height: MediaQuery.of(context).size.height,
             clipBehavior: Clip.antiAlias,
             decoration: ShapeDecoration(
-              gradient: LinearGradient(
+              gradient: const LinearGradient(
                 begin: Alignment(0.00, -1.00),
                 end: Alignment(0, 1),
                 colors: [
@@ -43,15 +46,15 @@ class RegisterSelect extends StatelessWidget {
               children: [
                 Positioned(
                   top: 0,
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height * 0.4,
                     child: Image.asset("assets/output_image.png"),
                   ),
                 ),
                 Positioned(
-                  top: topofbutton,
-                  left: lefofbutton,
+                  top: buttongroup,
+                  left: buttonhole,
                   child:Row(
                     children: [
                       Column
@@ -59,30 +62,30 @@ class RegisterSelect extends StatelessWidget {
                         children:
                         [
                           Positioned(
-                            top: topofbutton,
-                            left: lefofbutton,
+                            top: buttongroup,
+                            left: buttonhole,
 
 
                             child: ElevatedButton(
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => ParentRegister()),
+                                  MaterialPageRoute(builder: (context) => LogInParent()),
                                 );
                               },
                               style: ElevatedButton.styleFrom(
-                                primary: Color(0xFFFEFFEE), // Set the background color of the button
-                                shape: CircleBorder(
+                                backgroundColor: const Color(0xFFFEFFEE), // Set the background color of the button
+                                shape: const CircleBorder(
                                   //borderRadius: BorderRadius.circular(0),
                                 ),
-                                shadowColor: Color(0x3F000000),
+                                shadowColor: const Color(0x3F000000),
                                 elevation: 4,
                               ),
                               child: Container(
 
                                 width: MediaQuery.of(context).size.width * 0.25,
                                 height: MediaQuery.of(context).size.width * 0.25,
-                                decoration: ShapeDecoration(
+                                decoration: const ShapeDecoration(
                                   color: Color(0xFFFEFFEE),
                                   shape: CircleBorder(),
                                   shadows: [
@@ -94,7 +97,7 @@ class RegisterSelect extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                child: Center(
+                                child: const Center(
                                   child: Icon(
                                     Icons.account_circle_sharp,
                                     color: Colors.black, // Set your desired icon color
@@ -104,20 +107,20 @@ class RegisterSelect extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           Positioned(
                             child:Container(
-                              width: widthbutton,
-                              height: heightbutton / 2,
+                              width: widthButton,
+                              height: heightButton / 2,
                               //color: Color(0xFFFEFFEE),
                               decoration: ShapeDecoration(
-                                color: Color(0x6DFDFFEE),
+                                color: const Color(0x6DFDFFEE),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),
                                 ),),
                               alignment: Alignment.center,
 
-                              child: Text(
+                              child: const Text(
                                 'PARENT',
                                 style: TextStyle(
                                   color: Colors.black,
@@ -132,13 +135,13 @@ class RegisterSelect extends StatelessWidget {
 
                         ],
                       ),
-                      SizedBox(width: betweenbutton),
+                      SizedBox(width: betweenButton),
                       Column(
                         children:
                         [
                           Positioned(
-                            top: topofbutton,
-                            left: lefofbutton,
+                            top: buttongroup,
+                            left: buttonhole,
                             child: ElevatedButton(
                               //DIVER BUTTON
                               //DIVER BUTTON
@@ -153,22 +156,22 @@ class RegisterSelect extends StatelessWidget {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => HostessRegister()),
+                                  MaterialPageRoute(builder: (context) => LogInHostess()),
                                 );
                               },
                               style: ElevatedButton.styleFrom(
-                                primary: Color(0xFFFEFFEE), // Set the background color of the button
-                                shape: CircleBorder(
+                                backgroundColor: const Color(0xFFFEFFEE), // Set the background color of the button
+                                shape: const CircleBorder(
                                   //borderRadius: BorderRadius.circular(0),
                                 ),
-                                shadowColor: Color(0x3F000000),
+                                shadowColor: const Color(0x3F000000),
                                 elevation: 4,
                               ),
                               child: Container(
 
                                 width: MediaQuery.of(context).size.width * 0.25,
                                 height: MediaQuery.of(context).size.width * 0.25,
-                                decoration: ShapeDecoration(
+                                decoration: const ShapeDecoration(
                                   color: Color(0xFFFEFFEE),
                                   shape: CircleBorder(),
                                   shadows: [
@@ -180,7 +183,7 @@ class RegisterSelect extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                child: Center(
+                                child: const Center(
                                   child: Icon(
                                     Icons.access_time_filled_rounded,
                                     color: Colors.black, // Set your desired icon color
@@ -190,20 +193,20 @@ class RegisterSelect extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           Positioned(
                             child:Container(
-                              width: widthbutton,
-                              height: heightbutton / 2,
+                              width: widthButton,
+                              height: heightButton / 2,
                               //color: Color(0xFFFEFFEE),
                               decoration: ShapeDecoration(
-                                color: Color(0x6DFDFFEE),
+                                color: const Color(0x6DFDFFEE),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),
                                 ),),
                               alignment: Alignment.center,
 
-                              child: Text(
+                              child: const Text(
                                 'HOSTESS',
                                 style: TextStyle(
                                   color: Colors.black,
@@ -222,8 +225,8 @@ class RegisterSelect extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  top: (topofbutton/0.45)*0.66,
-                  left: lefofbutton*2,
+                  top: (buttongroup/0.45)*0.66,
+                  left: buttonhole*2,
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -237,14 +240,14 @@ class RegisterSelect extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      shadowColor: Color(0x3F000000),
+                      shadowColor: const Color(0x3F000000),
                       elevation: 4,
                     ),
                     child: Container(
-                      width: widthbutton*2,
-                      height: heightbutton / 1.5,
+                      width: widthButton*2,
+                      height: heightButton / 1.5,
                       alignment: Alignment.center,
-                      child: Text(
+                      child: const Text(
                         'Go Back',
                         style: TextStyle(
                           color: Colors.black,
@@ -263,7 +266,7 @@ class RegisterSelect extends StatelessWidget {
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width*0.5,
                       height: MediaQuery.of(context).size.height*0.1,
-                      child: Text(
+                      child: const Text(
                         'KidCruiser\nVersion 1.0.0\n Order 227 Team',
                         textAlign: TextAlign.center,
                         style: TextStyle(
