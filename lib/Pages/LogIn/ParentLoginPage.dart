@@ -82,6 +82,8 @@ class _hostes_loginState extends State<LogInParent> {
                     onPressed: () async {
                       if (await parentController.logIn(
                           inputController, _formKey.currentState!)) {
+                        inputController.phoneNumberController.clear();
+                        inputController.passwordController.clear();
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => ParentBase()),
@@ -157,8 +159,7 @@ class _hostes_loginState extends State<LogInParent> {
                                 //controller: inputController.phoneNumberController,
                                 keyboardType: TextInputType.datetime,
                                 decoration: InputDecoration(
-                                  border:
-                                      OutlineInputBorder(), // Add an outline border
+                                  enabledBorder: InputBorder.none,// Add an outline border
                                   hintText: '0-(5xx)-xxx-xxxx',
                                 ),
                               ),
@@ -186,7 +187,8 @@ class _hostes_loginState extends State<LogInParent> {
                             const SizedBox(height: 5),
                             Container(
                               width: MediaQuery.of(context).size.width * 0.6,
-                              height: MediaQuery.of(context).size.height * 0.08,
+                              // Make sure the height can accommodate the error message
+                              height: MediaQuery.of(context).size.height * 0.1, // Adjusted height
                               decoration: ShapeDecoration(
                                 color: Colors.white.withOpacity(0.8),
                                 shape: RoundedRectangleBorder(
@@ -198,23 +200,26 @@ class _hostes_loginState extends State<LogInParent> {
                                 controller: inputController.passwordController,
                                 validator: parentController.validatePassword,
                                 decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    // labelText: "Enter Password",
-                                    //helperText: "Password must be at least 8 characters and include \nan uppercase letter, a lowercase letter, and a digit.",
+                                    enabledBorder: InputBorder.none,
+                                    errorStyle: TextStyle( // Adjust the style of error text
+                                      fontSize: 10, // Smaller font size
+                                      height: 0.7, // Tighter line height
+                                    ),
+                                    errorMaxLines: 3, // Allow error text to take up to 3 lines
                                     suffixIcon: IconButton(
                                       icon: Icon(
-                                        _isObscured
-                                            ? Icons.visibility
-                                            : Icons.visibility_off,
+                                        _isObscured ? Icons.visibility : Icons.visibility_off,
                                       ),
                                       onPressed: () {
                                         setState(() {
                                           _isObscured = !_isObscured;
                                         });
                                       },
-                                    )),
+                                    )
+                                ),
                               ),
                             ),
+
                           ],
                         ),
                       ),

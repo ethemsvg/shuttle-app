@@ -166,8 +166,13 @@ class _HostessRegisterState extends State<HostessRegister> {
                                     hostessRegisterController.validatePassword,
                                     decoration: InputDecoration(
                                         enabledBorder: InputBorder.none,
-                                        contentPadding:
-                                        EdgeInsets.only(left: 20.0, top: 20.0),
+                                        errorStyle: TextStyle( // Adjust the style of error text
+                                          fontSize: 10, // Smaller font size
+                                          height: 0.7, // Tighter line height
+                                        ),
+                                        errorMaxLines: 3,
+                                       // contentPadding:
+                                       // EdgeInsets.only(left: 20.0, top: 20.0),
                                         suffixIcon: IconButton(
                                           icon: Icon(
                                             _isObscured
@@ -226,8 +231,11 @@ class _HostessRegisterState extends State<HostessRegister> {
                                     },
                                     decoration: InputDecoration(
                                         enabledBorder: InputBorder.none,
-                                        contentPadding:
-                                        EdgeInsets.only(left: 20.0, top: 20.0),
+                                        errorStyle: TextStyle( // Adjust the style of error text
+                                          fontSize: 10, // Smaller font size
+                                          height: 0.7, // Tighter line height
+                                        ),
+                                        errorMaxLines: 3,
                                         suffixIcon: IconButton(
                                           icon: Icon(
                                             _isObscured_
@@ -255,6 +263,12 @@ class _HostessRegisterState extends State<HostessRegister> {
                                   if (_formKey.currentState?.validate() ?? false) {
                                     if (await hostessRegisterController.register(
                                         inputController, _formKey.currentState!)) {
+                                      inputController.nameController.clear();
+                                      inputController.surnameController.clear();
+                                      inputController.phoneNumberController.clear();
+                                      inputController.passwordController.clear();
+                                      inputController.confirmpasswordController.clear();
+
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
