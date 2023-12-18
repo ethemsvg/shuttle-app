@@ -63,6 +63,8 @@ class ParentController extends AbstractController {
         parent.name = inputController.nameController.text;
         parent.surname = inputController.surnameController.text;
         parent.phoneNumber = inputController.phoneNumberController.text;
+        parent.password = inputController.passwordController.text;
+        parent.childList=[];
 
         // Add the Parent object to Firestore
         await FirebaseFirestore.instance.collection('Parents').add({
@@ -106,7 +108,7 @@ class ParentController extends AbstractController {
     try {
       myFirebase.querySnapshot = await FirebaseFirestore.instance
           .collection('Shuttle')
-          .where('shuttleKey',
+          .where('shuttle_code',
               isEqualTo: inputController.shuttleCodeController.text)
           .get();
       if (myFirebase.querySnapshot.docs.isEmpty) {
@@ -119,8 +121,8 @@ class ParentController extends AbstractController {
       children.school.school_name = selectedSchool;
       children.phoneNumber = parent.phoneNumber;
       children.birthDate = inputController.birthDateController.text;
-      children.key =
-          children.hashTcID(inputController.birthDateController.text);
+      children.key = children.hashTcID(inputController.birthDateController.text);
+      children.state = "EVDE";
       parent.childList.add(children.key);
 
       addChildToDB(inputController, selectedSchool);
@@ -140,37 +142,38 @@ class ParentController extends AbstractController {
     await FirebaseFirestore.instance.collection('Children').add({
       'name': inputController.nameController.text,
       'surname': inputController.surnameController.text,
-      'shuttleKey': inputController.shuttleCodeController.text,
+      'shuttle_code': inputController.shuttleCodeController.text,
       'school_name': selectedSchool,
       'parent_phone_number': parent.phoneNumber,
-      'birthDate': inputController.birthDateController.text,
+      'birth_date': inputController.birthDateController.text,
       'key': children.key,
+      'state': 'EVDE',
     });
   }
 
   Future<void> addChildToHostessDB() async {
     myFirebase.querySnapshot = await FirebaseFirestore.instance
         .collection('Hostess')
-        .where('shuttleKey', isEqualTo: children.shuttleKey)
+        .where('shuttle_code', isEqualTo: children.shuttleKey)
         .get();
 
     var docID = myFirebase.querySnapshot.docs.first.id;
 
     await FirebaseFirestore.instance.collection('Hostess').doc(docID).update({
-      'childList': FieldValue.arrayUnion([children.key])
+      'child_list': FieldValue.arrayUnion([children.key])
     });
   }
 
   Future<void> addChildToShuttleDB() async {
     myFirebase.querySnapshot = await FirebaseFirestore.instance
         .collection('Shuttle')
-        .where('shuttleKey', isEqualTo: children.shuttleKey)
+        .where('shuttle_code', isEqualTo: children.shuttleKey)
         .get();
 
     var docID = myFirebase.querySnapshot.docs.first.id;
 
     await FirebaseFirestore.instance.collection('Shuttle').doc(docID).update({
-      'childList': FieldValue.arrayUnion([children.key])
+      'child_list': FieldValue.arrayUnion([children.key])
     });
   }
 

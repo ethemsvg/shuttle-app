@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_dev/Controller/Concretes/Input/InputController.dart';
 import 'package:mobile_dev/Controller/Concretes/Parent/ParentController.dart';
 import 'package:mobile_dev/Controller/Concretes/School/SchoolController.dart';
+import 'package:mobile_dev/Pages/Parent/ParentBase.dart';
 
 class AddChildPage extends StatefulWidget {
   @override
@@ -104,11 +105,6 @@ class _AddChildPage extends State<AddChildPage> {
                     controller: inputController.birthDateController,
                   ),
                   SizedBox(height: 16.0),
-                  buildInputLabel("Parent Phone"),
-                  buildInputField(
-                    controller: inputController.phoneNumberController,
-                  ),
-                  SizedBox(height: 16.0),
                   buildInputLabel("Shuttle Code"),
                   buildInputField(
                     controller: inputController.shuttleCodeController,
@@ -138,6 +134,10 @@ class _AddChildPage extends State<AddChildPage> {
                       if (await parentController.addChild(
                           inputController, selectedSchool)) {
                         print("SUCCESS!");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ParentBase()),
+                        );
                       } else {
                         print("Error");
                       }
