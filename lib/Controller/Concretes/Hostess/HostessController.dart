@@ -6,34 +6,25 @@ import 'package:mobile_dev/DAOServices/MyFirebase.dart';
 import 'package:mobile_dev/Entities/Concretes/Children.dart';
 import 'package:mobile_dev/Entities/Concretes/Hostess.dart';
 
-
-
-
-
 class HostessController extends AbstractController{
 
   static Hostess hostess = Hostess();
   MyFirebase myFirebase=MyFirebase();
 
-  Future<LoginResult> logIn(InputController inputController, FormState formState) async {
-    if (!formState.validate()) {
-      return LoginResult.error;
-    }
+  Future<bool> logIn(InputController inputController, FormState formState) async {
 
-    var phoneNumber = inputController.phoneNumberController.text;
-    var password = inputController.passwordController.text;
+    if(formState.validate()){
+      var phoneNumber = inputController.phoneNumberController.text;
+      var password = inputController.passwordController.text;
 
-    try {
-      bool exists = await checkExistForLogIn(phoneNumber, password);
-      if (exists) {
-        return LoginResult.success;
+      if (await checkExistForLogIn(phoneNumber, password)) {
+        return true;
       } else {
-        return LoginResult.phoneNumberNotExist;
+        super.errorMessage = "Invalid phone number or password!";
       }
-    } catch (e) {
-      //print("Error: $e");
-      return LoginResult.error;
+      return false;
     }
+    return false;
   }
 
   Future<bool> checkExistForLogIn(String phoneNumber, String password) async {
@@ -65,20 +56,6 @@ class HostessController extends AbstractController{
     }
   }
 
-
-  Future<String?> checkUserExistence(String phoneNumber) async {
-    try {
-      var exists = await checkExistForRegister(phoneNumber);
-      // print(exists);
-      if (!exists) {
-        // User already exists
-        return "This phone number is already in use.";
-      }
-      return null; // User does not exist, return null
-    } catch (e) {
-      return "An error occurred during registration.";
-    }
-  }
 
 
   Future<bool> register(InputController inputController, FormState formState) async {
