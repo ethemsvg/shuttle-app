@@ -5,8 +5,7 @@ import 'package:mobile_dev/Entities/Concretes/Parent.dart';
 import 'package:mobile_dev/Pages/Home/HomePage.dart';
 import 'package:mobile_dev/Pages/Parent/ParentBase.dart';
 
-import '../../Controller/Abstract/AbstractController.dart';
-import '../Select/login_select.dart';
+import '../Select/LogInSelect.dart';
 
 //import '../hostess/hostess_base.dart';
 
@@ -81,76 +80,13 @@ class _hostes_loginState extends State<LogInParent> {
                   left: lefofbutton * 3,
                   child: ElevatedButton(
                     onPressed: () async {
-
-                      var result = await parentController.logIn(inputController, _formKey.currentState!);
-
-                      if (result == LoginResult.success) {
-                        // Navigate to the next page
-
                       if (await parentController.logIn(
                           inputController, _formKey.currentState!)) {
                         inputController.phoneNumberController.clear();
                         inputController.passwordController.clear();
-
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => ParentBase()),
-                        );
-                      } else if (result == LoginResult.phoneNumberNotExist) {
-                        // Show an error message for non-existent phone number
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text(
-                                "ERROR!",
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600,
-                                  // Replace with your desired color
-                                ),
-                              ),
-                              //backgroundColor: Colors.red,
-                              content: Text("Phone number does not exist.",style: TextStyle(fontSize: 15),),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: Text("Close"),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      } else {
-                        // Handle other errors
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text(
-                                "ERROR!",
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600,
-                                  // Replace with your desired color
-                                ),
-                              ),
-                              content: Text("Invalid phone number or password!",style: TextStyle(fontSize: 15),),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: Text("Close"),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-
-                              ],
-                            );
-                          },
                         );
                       }
                     },
