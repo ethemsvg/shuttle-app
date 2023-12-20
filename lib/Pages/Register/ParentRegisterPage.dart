@@ -27,14 +27,8 @@ class _ParentRegisterState extends State<ParentRegister> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
-    double screenHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -135,14 +129,8 @@ class _ParentRegisterState extends State<ParentRegister> {
                         ),
                         //SizedBox(height: screenHeight * 0.02),
                         Container(
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width * 0.6,
-                          height: MediaQuery
-                              .of(context)
-                              .size
-                              .height * 0.15,
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          height: MediaQuery.of(context).size.height * 0.15,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -151,10 +139,7 @@ class _ParentRegisterState extends State<ParentRegister> {
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize:
-                                  MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width * 0.04,
+                                  MediaQuery.of(context).size.width * 0.04,
                                   fontFamily: 'Roboto',
                                   fontWeight: FontWeight.w400,
                                   height: 0,
@@ -162,14 +147,8 @@ class _ParentRegisterState extends State<ParentRegister> {
                               ),
                               const SizedBox(height: 5),
                               Container(
-                                width: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .width * 0.6,
-                                height: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .height * 0.08,
+                                width: MediaQuery.of(context).size.width * 0.6,
+                                height: MediaQuery.of(context).size.height * 0.08,
                                 decoration: ShapeDecoration(
                                   color: Colors.white.withOpacity(0.8),
                                   shape: RoundedRectangleBorder(
@@ -178,10 +157,8 @@ class _ParentRegisterState extends State<ParentRegister> {
                                 ),
                                 child: TextFormField(
                                   obscureText: _isObscured,
-                                  controller: inputController
-                                      .passwordController,
-                                  validator: parentRegisterController
-                                      .validatePassword,
+                                  controller: inputController.passwordController,
+                                  validator: parentRegisterController.validatePassword,
                                   decoration: InputDecoration(
                                       enabledBorder: InputBorder.none,
                                       errorStyle: TextStyle( // Adjust the style of error text
@@ -210,14 +187,8 @@ class _ParentRegisterState extends State<ParentRegister> {
                         ),
                         SizedBox(height: screenHeight * 0.02),
                         Container(
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width * 0.6,
-                          height: MediaQuery
-                              .of(context)
-                              .size
-                              .height * 0.15,
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          height: MediaQuery.of(context).size.height * 0.15,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -226,10 +197,7 @@ class _ParentRegisterState extends State<ParentRegister> {
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize:
-                                  MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width * 0.04,
+                                  MediaQuery.of(context).size.width * 0.04,
                                   fontFamily: 'Roboto',
                                   fontWeight: FontWeight.w400,
                                   height: 0,
@@ -237,14 +205,8 @@ class _ParentRegisterState extends State<ParentRegister> {
                               ),
                               const SizedBox(height: 5),
                               Container(
-                                width: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .width * 0.6,
-                                height: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .height * 0.08,
+                                width: MediaQuery.of(context).size.width * 0.6,
+                                height: MediaQuery.of(context).size.height * 0.08,
                                 decoration: ShapeDecoration(
                                   color: Colors.white.withOpacity(0.8),
                                   shape: RoundedRectangleBorder(
@@ -254,12 +216,9 @@ class _ParentRegisterState extends State<ParentRegister> {
                                 child: TextFormField(
 
                                   obscureText: _isObscured_,
-                                  controller: inputController
-                                      .confirmpasswordController,
+                                  controller: inputController.confirmpasswordController,
                                   validator: (value) {
-                                    if (value !=
-                                        inputController.passwordController
-                                            .text) {
+                                    if (value != inputController.passwordController.text) {
                                       return 'Passwords do not match';
                                     }
                                     return null; // Return null if the entered password is valid
@@ -274,13 +233,11 @@ class _ParentRegisterState extends State<ParentRegister> {
                                       errorMaxLines: 3,
                                       //labelText: "Confirm Password",
                                       helperText: "Re-enter your password",
-                                      suffixIcon: IconButton(
+                                      suffixIcon:IconButton(
                                         icon: Icon(
-                                          _isObscured_
-                                              ? Icons.visibility
-                                              : Icons.visibility_off,
+                                          _isObscured_ ? Icons.visibility : Icons.visibility_off,
                                         ),
-                                        onPressed: () {
+                                        onPressed: (){
                                           setState(() {
                                             _isObscured_ = !_isObscured_;
                                           });
@@ -297,30 +254,6 @@ class _ParentRegisterState extends State<ParentRegister> {
                           child: ElevatedButton(
                             onPressed: () async {
                               if (_formKey.currentState?.validate() ?? false) {
-
-                                // Synchronous validation passed
-                                String? existenceError = await parentRegisterController
-                                    .checkUserExistence(
-                                    inputController.phoneNumberController.text);
-                                  print(existenceError);
-                                if (existenceError == null) {
-                                  print("object");
-                                  // No existing user, try to register
-                                  bool registrationSuccess = await parentRegisterController
-                                      .register(
-                                      inputController, _formKey.currentState!);
-
-                                  if (!registrationSuccess) {
-                                    // Registration failed, show dialog
-                                    _showErrorDialog(
-                                        "Registration failed. Please try again.");
-                                  } else {
-                                    // Registration success, proceed further
-                                  }
-                                } else {
-                                  // Existing user, show error dialog
-                                  _showErrorDialog(existenceError);
-
                                 if (await parentRegisterController.register(
                                     inputController, _formKey.currentState!)) {
                                   inputController.nameController.clear();
@@ -334,13 +267,19 @@ class _ParentRegisterState extends State<ParentRegister> {
                                       builder: (context) => LogInParent(),
                                     ),
                                   );
-
                                 }
+                              } else {
+                                setState(() {
+                                  _nameError = parentRegisterController.validateName(inputController.nameController.text);
+                                  _surnameError = parentRegisterController.validateSurname(inputController.surnameController.text);
+                                  _phoneNumberError = parentRegisterController.validatePhoneNumber(inputController.phoneNumberController.text);
+                                  _passwordError = parentRegisterController.validatePassword(inputController.passwordController.text);
+                                  _confirmPasswordError = parentRegisterController.validatePassword(inputController.confirmpasswordController.text);
+                                });
                               }
                             },
                             child: Text("Register"),
                           ),
-
                         ),
                       ],
                     ),
@@ -354,19 +293,12 @@ class _ParentRegisterState extends State<ParentRegister> {
     );
   }
 
-  Widget buildCustomInputField(TextEditingController x_controller,
-      String labelText, String? Function(String?)? x_validator,
-      TextInputType keyboardType,
+  Widget buildCustomInputField(
+      TextEditingController x_controller, String labelText, String? Function(String?)? x_validator, TextInputType keyboardType,
       {bool isObscured = false, VoidCallback? onPressed, String? errorText, double? screenWidth, double? screenHeight}) {
     return Container(
-      width: MediaQuery
-          .of(context)
-          .size
-          .width * 0.6,
-      height: MediaQuery
-          .of(context)
-          .size
-          .height * 0.15,
+      width: MediaQuery.of(context).size.width * 0.6,
+      height: MediaQuery.of(context).size.height * 0.15,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -375,10 +307,7 @@ class _ParentRegisterState extends State<ParentRegister> {
             style: TextStyle(
               color: Colors.black,
               fontSize:
-              MediaQuery
-                  .of(context)
-                  .size
-                  .width * 0.04,
+              MediaQuery.of(context).size.width * 0.04,
               fontFamily: 'Roboto',
               fontWeight: FontWeight.w400,
               height: 0,
@@ -386,14 +315,8 @@ class _ParentRegisterState extends State<ParentRegister> {
           ),
           const SizedBox(height: 5),
           Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width * 0.6,
-            height: MediaQuery
-                .of(context)
-                .size
-                .height * 0.08,
+            width: MediaQuery.of(context).size.width * 0.6,
+            height: MediaQuery.of(context).size.height * 0.08,
             decoration: ShapeDecoration(
               color: Colors.white.withOpacity(0.8),
 
@@ -416,26 +339,6 @@ class _ParentRegisterState extends State<ParentRegister> {
           ),
         ],
       ),
-    );
-  }
-
-
-  void _showErrorDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (context) =>
-          AlertDialog(
-            title: Text('Error'),
-            content: Text(message),
-            actions: <Widget>[
-              TextButton(
-                child: Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop(); // Close the dialog
-                },
-              ),
-            ],
-          ),
     );
   }
 }

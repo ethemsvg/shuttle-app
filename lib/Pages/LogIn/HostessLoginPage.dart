@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_dev/Controller/Concretes/Hostess/HostessController.dart';
 import 'package:mobile_dev/Pages/Home/HomePage.dart';
-import 'package:mobile_dev/Pages/Select/login_select.dart';
+import 'package:mobile_dev/Pages/Select/LogInSelect.dart';
 
-import '../../Controller/Abstract/AbstractController.dart';
 import '../../Controller/Concretes/Input/InputController.dart';
 import '../../Controller/Concretes/Parent/ParentController.dart';
 import '../hostess/HostessBase.dart';
@@ -79,74 +78,6 @@ class _hostes_loginState extends State<LogInHostess> {
                   top: (topofbutton / 0.45) * 0.66,
                   left: lefofbutton * 3,
                   child: ElevatedButton(
-
-                      onPressed: () async {
-                        var result = await hostessController.logIn(inputController, _formKey.currentState!);
-
-                        if (result == LoginResult.success) {
-                          // Navigate to the next page
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => start_cruise_page()),
-                          );
-                        } else if (result == LoginResult.phoneNumberNotExist) {
-                          // Show an error message for non-existent phone number
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title:Text(
-                                  "ERROR!",
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
-                                    // Replace with your desired color
-                                  ),
-                                ),
-                                content: Text("Phone number does not exist.",style: TextStyle(fontSize: 15),),
-                                actions: <Widget>[
-                                  TextButton(
-                                    child: Text("Close"),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        } else {
-                          // Handle other errors
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text(
-                                  "ERROR!",
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
-                                    // Replace with your desired color
-                                  ),
-                                ),
-                                content: Text("Invalid phone number or password!",style: TextStyle(fontSize: 15),),
-                                actions: <Widget>[
-                              TextButton(
-                              child: Text("Close"),
-                              onPressed: () {
-                              Navigator.of(context).pop();
-                              },
-                              ),
-
-                                ],
-                              );
-                            },
-                          );
-                        }
-                      },
-
                     onPressed: () async {
                       if (await hostessController.logIn(
                           inputController, _formKey.currentState!)) {
@@ -159,7 +90,6 @@ class _hostes_loginState extends State<LogInHostess> {
                         );
                       }
                     },
-
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
                       shape: RoundedRectangleBorder(
@@ -227,8 +157,6 @@ class _hostes_loginState extends State<LogInHostess> {
                                     inputController.phoneNumberController,
                                 validator:
                                     hostessController.validatePhoneNumber,
-
-
                                 //controller: inputController.phoneNumberController,
                                 keyboardType: TextInputType.datetime,
                                 decoration: InputDecoration(
@@ -355,5 +283,3 @@ class _hostes_loginState extends State<LogInHostess> {
     );
   }
 }
-
-
